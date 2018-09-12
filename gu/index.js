@@ -1,6 +1,7 @@
 
 const fs = require("fs");
 
+//获取某个目录下所有vue文件的路径
 function getAllVueFile (path) {
     let vueFileList = [];
     let fileList = fs.readdirSync(path).map(filename => path + "/" + filename);
@@ -18,6 +19,20 @@ function getAllVueFile (path) {
     return vueFileList;
 }
 
-setInterval(() => {
-    console.log(getAllVueFile("../src/components"));
-}, 1000);
+
+let oldListJson = "json";
+
+function watchVueFile () {
+    setTimeout(() => {
+        let newList = getAllVueFile("../src/components");
+        let newListJson = JSON.stringify(newList);
+        if (newListJson != oldListJson) {
+            console.log(newList);
+            oldListJson = newListJson;
+        }
+        watchVueFile();
+    }, 1000);
+}
+
+
+watchVueFile();
