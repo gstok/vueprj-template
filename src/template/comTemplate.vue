@@ -22,10 +22,13 @@
         },
         data () {
             return {
-                //#region 页面绑定数据
+                //#region 页面对象
                 //#endregion
 
-                //#region 页面绑定样式
+                //#region 页面内容绑定数据
+                //#endregion
+
+                //#region 页面样式绑定数据
                 //#endregion
             };
         },
@@ -33,10 +36,13 @@
 
         },
         computed: {
-            //#region 自动样式计算属性
+            //#region 常量计算属性
             //#endregion
 
-            //#region 常量计算属性
+            //#region 数据转换计算属性
+            //#endregion
+
+            //#region 样式计算属性
             //#endregion
         },
         methods: {
