@@ -55,12 +55,13 @@
         },
         computed: {
             //#region 图表配置计算属性
+                //图表初始化配置
                 autoOptionTemplate () {
                     return {
 
                     };
                 },
-
+                //图表动态更新配置
                 autoOption () {
                     return {
 
