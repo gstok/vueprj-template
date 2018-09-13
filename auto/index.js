@@ -7,11 +7,34 @@ function pathConvert (path) {
     return path.replace("../src", "@");
 }
 
+//根据path获取组件名称
 function getFileName (path) {
     let pathSegList = path.split("/");
-    let fileName = pathSegList[pathSegList.length - 1];
-    let fileNameSegList = fileName.split(".");
-    return fileNameSegList[0];
+    let fileNameExt = pathSegList[pathSegList.length - 1];
+    let fileNameSegList = fileNameExt.split(".");
+    let fileName = fileNameSegList[0];
+    let firstChar = fileName.substring(0, 1);
+    if (/[a-z]/.test(firstChar)) {
+        firstChar = firstChar.toUpperCase();
+    }
+    fileName = firstChar + fileName.substring(1, fileName.length);
+    let filePath = pathConvert(path);
+    if (filePath.startsWith("@/components/bCom")) {
+        fileName = "bc" + fileName;
+    }
+    if (filePath.startsWith("@/components/cCom")) {
+        fileName = "cc" + fileName;
+    }
+    if (filePath.startsWith("@/components/dCom")) {
+        fileName = "dc" + fileName;
+    }
+    if (filePath.startsWith("@/components/fCom")) {
+        fileName = "fc" + fileName;
+    }
+    if (filePath.startsWith("@/components/uiCom")) {
+        fileName = "ui" + fileName;
+    }
+    return fileName;
 }
 
 //获取某个目录下所有vue文件的路径
