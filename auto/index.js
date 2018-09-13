@@ -47,7 +47,9 @@ function getFileName (path) {
 function importCode (fileList) {
     let importCodeList = [];
     importCodeList = fileList.map(file => `import ${ file.name } from "${ file.path }";`);
-    return importCodeList.join("\r\n");
+    let importCodeText = importCodeList.join("\r\n") + "\r\n\r\n";
+    let componentsCodeText = `const components = [\r\n${ fileList.map(file => `    ${ file.name },`).join("\r\n") }\r\n];\r\n`;
+    return importCodeText + componentsCodeText;
 }
 
 function buildExportFile (pathList) {
