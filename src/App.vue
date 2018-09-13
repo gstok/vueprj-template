@@ -12,9 +12,8 @@
 
 <template>
     <div id="app">
-        <img src="./assets/logo.png">
-        <gushi></gushi>
-        <haha></haha>
+        <fcGushi></fcGushi>
+        <dcDialog></dcDialog>
         <router-view />
     </div>
 </template>
@@ -22,8 +21,5 @@
 <script>
     export default {
         name: 'App',
-        mounted () {
-            console.log(UUID());
-        },
     }
 </script>

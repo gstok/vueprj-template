@@ -4,9 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import ssss from "./components";
+import components from "./components";
 
-Vue.use(ssss);
+Vue.use(components);
 
 Vue.config.productionTip = false
 
