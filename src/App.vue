@@ -13,6 +13,8 @@
 <template>
     <div id="app">
         <img src="./assets/logo.png">
+        <gushi></gushi>
+        <haha></haha>
         <router-view />
     </div>
 </template>

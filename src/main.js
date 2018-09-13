@@ -4,6 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import ssss from "./components";
+
+Vue.use(ssss);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

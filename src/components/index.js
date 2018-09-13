@@ -1,23 +1,21 @@
 
-import Pagination from '../packages/pagination/index.js';
+import vue_HelloWorld from "@/components/HelloWorld.vue";
+import vue_gushi from "@/components/fCom/gushi.vue";
+import vue_baba from "@/components/pCom/baba.vue";
+import vue_haha from "@/components/pCom/haha.vue";
 
-const components = [
-    Pagination,
-];
+export const HelloWorld = { install: Vue => Vue.component("HelloWorld", vue_HelloWorld) };
+export const gushi = { install: Vue => Vue.component("gushi", vue_gushi) };
+export const baba = { install: Vue => Vue.component("baba", vue_baba) };
+export const haha = { install: Vue => Vue.component("haha", vue_haha) };
 
-const install = function(Vue, opts = {}) {
-    components.forEach(component => {
-        Vue.component(component.name, component);
-    });
+const components = {
+    install: Vue => {
+        Vue.component("HelloWorld", vue_HelloWorld);
+        Vue.component("gushi", vue_gushi);
+        Vue.component("baba", vue_baba);
+        Vue.component("haha", vue_haha);
+    }
 };
 
-if (typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-}
-
-module.exports = {
-    install,
-    Pagination,
-};
-
-module.exports.default = module.exports;
+export default components;
