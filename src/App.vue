@@ -21,7 +21,7 @@
     export default {
         name: 'App',
         mounted () {
-
+            console.log(UUID());
         },
     }
 </script>

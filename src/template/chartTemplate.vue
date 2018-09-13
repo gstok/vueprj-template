@@ -24,8 +24,6 @@
 </template>
 
 <script>
-    import ECharts from "echarts";
-
     export default {
         name: "chart",
         props: {
