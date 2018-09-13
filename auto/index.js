@@ -21,9 +21,9 @@ function getAllVueFile (path) {
 
 let oldListJson = "json";
 
-function watchVueFile () {
+function watchVueFile (path) {
     setTimeout(() => {
-        let newList = getAllVueFile("../src/components");
+        let newList = getAllVueFile(path);
         let newListJson = JSON.stringify(newList);
         if (newListJson != oldListJson) {
             buildExportFile(newList);
@@ -65,4 +65,4 @@ function buildExportFile (pathList) {
 }
 
 
-watchVueFile();
+watchVueFile("../src/components");
