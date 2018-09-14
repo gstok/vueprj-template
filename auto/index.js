@@ -55,7 +55,7 @@ function getAllVueFile (path) {
     return vueFileList;
 }
 
-//监听vue文件变动
+//监听文件变动
 function watchVueFile (path) {
     setTimeout(() => {
         let newList = getAllVueFile(path).sort();
