@@ -48,7 +48,7 @@ async function api_actSaveSceneMetaAO008 (params) {
 
 let funcList = [
     {
-        id: 1,
+        id: 99,
         type: "AO",
         name: "saveSceneMeta",
         url: "/api/xsea/scene/saveSceneMeta",
@@ -67,12 +67,14 @@ let funcList = [
     },
 ];
 
+funcList = funcList.sort((a, b) => a.id - b.id);
+
 
 
 //生成函数名
-function funcName (funcObj) {
-    let type = funcObj.type.toUpperCase();
-    let name = funcObj.name.substring(0, 1).toUpperCase() + funcObj.name.substring(1);
+function funcName (func) {
+    let type = func.type.toUpperCase();
+    let name = func.name.substring(0, 1).toUpperCase() + func.name.substring(1);
     //计算出前缀
     let prefix = "";
     if (type == "O" ||
@@ -87,26 +89,24 @@ function funcName (funcObj) {
     else if (type == "R") {
         prefix = "res";
     }
-    let id = S(funcObj.id.toString()).padLeft(4, '0');
+    let id = S(func.id.toString()).padLeft(4, '0');
     return `${ prefix }${ name }${ type }${ id }`;
 }
-
 //根据接口函数对象生成函数代码
-function funcBuilder (funcObj) {
-    funcObj.type = funcObj.type.toUpperCase();
-    funcObj.method = funcObj.method.toLowerCase();
-    let warningPass = !(funcObj.warningPass === false);
+function funcBuilder (func) {
+    func.type = func.type.toUpperCase();
+    func.method = func.method.toLowerCase();
+    let warningPass = !(func.warningPass === false);
     let code = `
-//${ funcObj.remark }
-async function api_${ funcName(funcObj) } (params) {
-    let reqUrl = "${ funcObj.url }";
-    let respRtv = await Http.${ funcObj.method }(reqUrl, params);
-    return respChanger(respRtv, "${ funcObj.type }", ${ warningPass });
+//${ func.remark }
+async function api_${ funcName(func) } (params) {
+    let reqUrl = "${ func.url }";
+    let respRtv = await Http.${ func.method }(reqUrl, params);
+    return respChanger(respRtv, "${ func.type }", ${ warningPass });
 }
 `;
     return code;
 }
-
 //生成顶部引用代码
 function topCode () {
     let code = `
@@ -116,8 +116,7 @@ import S from "string";
 `;
     return code;
 }
-
-//中部接口代码
+//生成中部接口代码
 function middleCode (funcList) {
     let code = `
 ${ funcList.map(func => {
@@ -126,8 +125,7 @@ ${ funcList.map(func => {
 `;
     return code;
 }
-
-//底部导出代码
+//生成底部导出代码
 function bottomCode (funcList) {
     let code = `
 ${ funcList.map(func => {
