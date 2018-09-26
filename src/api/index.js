@@ -15,72 +15,55 @@
 import RTV from "../common/rtv";
 
 
-async function api_getObject001 (params) {
+//获取列表接口
+async function api_getSomeList001 (params) {
     let reqUrl = "";
-    let response = await this.$post(reqUrl, params);
-    if (response.status == RTV.SUCCESS ||
-        response.status == RTV.WARNING) {
-        return response.object;
+    let iRTV = await this.$post(reqUrl, params);
+    if (iRTV.status == RTV.SUCCESS ||
+        iRTV.status == RTV.WARNING) {
+        return iRTV.data.list;
+    }
+    else {
+        return [];
+    }
+}
+
+//获取分页接口
+async function api_getPage002 (params) {
+    let reqUrl = "";
+    let iRTV = await this.$post(reqUrl, params);
+    if (iRTV.status == RTV.SUCCESS ||
+        iRTV.status == RTV.WARNING) {
+        return iRTV.data.page;
     }
     else {
         return null;
     }
 }
 
-//获取列表接口
-async function api_getSomeList001 (params) {
+//获取对象接口
+async function api_getObject003 (params) {
     let reqUrl = "";
-    let rtv = await this.$post(reqUrl, params);
-    if (rtv.status == RTV.SUCCESS ||
-        rtv.status == RTV.WARNING) {
-        return rtv.data.list;
+    let iRTV = await this.$post(reqUrl, params);
+    if (iRTV.status == RTV.SUCCESS ||
+        iRTV.status == RTV.WARNING) {
+        return iRTV.data.object;
     }
     else {
-        return [];
+        return null;
     }
 }
 
-async function api_action (params) {
+//行为操作接口
+async function api_actOpenSome004 (params) {
     let reqUrl = "";
-    let response = await this.$post(reqUrl, params);
-    if (response.success) {
-        return response.list;
+    let iRTV = await this.$post(reqUrl, params);
+    if (iRTV.status == RTV.SUCCESS ||
+        iRTV.status == RTV.WARNING) {
+        return iRTV.data.object;
     }
     else {
-        return [];
-    }
-}
-
-async function api_actionData (params) {
-    let reqUrl = "";
-    let response = await this.$post(reqUrl, params);
-    if (response.success) {
-        return response.list;
-    }
-    else {
-        return [];
-    }
-}
-
-async function api_page (params) {
-    let reqUrl = "";
-    let response = await this.$post(reqUrl, params);
-    if (response.success) {
-        return response.list;
-    }
-    else {
-        return [];
-    }
-}
-
-async function api_getObject (params) {
-    let reqUrl = "";
-    let response = await this.$post(reqUrl, params);
-    if (response.success) {
-        return response.list;
-    }
-    else {
-        return [];
+        return null;
     }
 }
 

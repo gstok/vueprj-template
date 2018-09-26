@@ -1,8 +1,8 @@
 
 import axios from "axios";
 import { Message } from "element-ui";
-
-let qs = require("qs");
+import RTV from "../common/rtv";
+const qs = require("qs");
 
 axios.defaults.timeout = 50000;
 axios.defaults.baseURL = '';
@@ -26,40 +26,18 @@ function showWarning (msg) {
 function http (config) {
     return new Promise((resolve, reject) => {
         axios(config).then(response => {
-
-            // console.log(response);
-
-            if (response.status === 401) {
-                // 需要跳转
-            }
-            else if (response.status === 403) {
-                // iView.Message.error('权限不足，禁止访问！');
-            }
-            else if (response.status === 500) {
-
-            }
-            else if (response.status !== 200) {
-                // iView.Message.error(response.data.msg);
-            }
-
-            if (response.status != 200) {
-                let message = response.data.message;
-                if (message) {
-                    showError(message);
-                }
+            if (response.status == 200) {
+                resolve(RTV.success({
+                    url: response.config.url,
+                    code: response.status,
+                    data: response.data,
+                }, response.statusText));
             }
             else {
-                if (!(response.data.success)) {
-                    let message = response.data.message;
-                    if (message) {
-                        showError(message);
-                    }
-                }    
+                resolve(RTV.error(""));
             }
-
-            resolve(response.data);
         }).catch(err => {
-            showError("网络请求发生错误");
+            showError("网络请求发生错误！");
             reject(err);
         });
     });
