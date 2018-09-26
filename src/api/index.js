@@ -12,11 +12,15 @@
 //状态，提示信息，数据
 
 
+import RTV from "../common/rtv";
+
+
 //获取列表接口
 async function api_getSomeList001 (params) {
     let reqUrl = "";
     let response = await this.$post(reqUrl, params);
-    if (response.success) {
+    if (response.status == RTV.SUCCESS ||
+        response.status == RTV.WARNING) {
         return response.list;
     }
     else {
