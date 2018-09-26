@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { Message } from "element-ui";
-import RTV from "../common/rtv";
+import RTV from "@/common/rtv";
 const qs = require("qs");
 
 axios.defaults.timeout = 50000;
@@ -26,16 +26,11 @@ function showWarning (msg) {
 function http (config) {
     return new Promise((resolve, reject) => {
         axios(config).then(response => {
-            if (response.status == 200) {
-                resolve(RTV.success({
-                    url: response.config.url,
-                    code: response.status,
-                    data: response.data,
-                }, response.statusText));
-            }
-            else {
-                resolve(RTV.error(""));
-            }
+            resolve(RTV.success({
+                url: response.config.url,
+                code: response.status,
+                data: response.data,
+            }, response.statusText));
         }).catch(err => {
             showError("网络请求发生错误！");
             reject(err);
@@ -49,7 +44,7 @@ function http (config) {
  * @param params 请求的参数
  * @returns {Promise}
  */
-export function fetch(url, params = { }) {
+function http_fetch(url, params = { }) {
     return http({
         method: 'GET',
         url: url,
@@ -59,6 +54,7 @@ export function fetch(url, params = { }) {
         }
     });
 }
+export const fetch = http_fetch;
 
 /**
  * 封装post请求
@@ -66,7 +62,7 @@ export function fetch(url, params = { }) {
  * @param data 请求的参数
  * @returns {Promise}
  */
-export function post(url, data = { }) {
+function http_post(url, data = { }) {
     return http({
         method: 'POST',
         url: url,
@@ -76,6 +72,7 @@ export function post(url, data = { }) {
         }
     });
 }
+export const post = http_post;
 
 /**
  * 封装Post提交表单
@@ -83,7 +80,7 @@ export function post(url, data = { }) {
  * @param formData 需要提交的表单
  * @returns {Promise}
  */
-export function formSub(url, formData = { }) {
+function http_formSub(url, formData = { }) {
     return http({
         method: 'POST',
         url: url,
@@ -93,6 +90,7 @@ export function formSub(url, formData = { }) {
         }
     });
 }
+export const formSub = http_formSub;
 
 /**
  * 封装patch请求
@@ -100,7 +98,7 @@ export function formSub(url, formData = { }) {
  * @param data 请求的参数
  * @returns {Promise}
  */
-export function patch(url, data = { }) {
+function http_patch(url, data = { }) {
     return http({
         method: 'PATCH',
         url: url,
@@ -110,6 +108,7 @@ export function patch(url, data = { }) {
         }
     });
 }
+export const patch = http_patch;
 
 /**
  * 封装put请求
@@ -117,7 +116,7 @@ export function patch(url, data = { }) {
  * @param data 请求的参数
  * @returns {Promise}
  */
-export function put(url, data = { }) {
+function http_put(url, data = { }) {
     return http({
         method: 'PUT',
         url: url,
@@ -127,3 +126,12 @@ export function put(url, data = { }) {
         }
     });
 }
+export const put = http_put;
+
+export default {
+    fetch: http_fetch,
+    post: http_post,
+    formSub: http_formSub,
+    patch: http_patch,
+    put: http_put,
+};

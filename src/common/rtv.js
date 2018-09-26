@@ -21,7 +21,7 @@ export default {
         };
     },
     //产生警告返回值
-    WARNING (msg, data) {
+    warning (msg, data) {
         return {
             status: this.WARNING,
             msg: msg,
