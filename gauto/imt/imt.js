@@ -109,7 +109,7 @@ ${ bottomCode(funcList) }
     return code;
 }
 
-//显示所有接口信息
+//显示所有接口列表
 function showAllApi (funcList) {
     let list = funcList.map(func => {
         return {
@@ -132,23 +132,92 @@ function showApiDetailById (funcList, id) {
         let name = funcName(func);
         let type = func.type.toUpperCase();
         let method = func.method.toLowerCase();
-        console.log("\n");
         console.log(`${ "url:".blue }    ${ func.url.green }`);
-        console.log(`${ id.red }    ${ name.green }    ${ type.blue }    ${ method.yellow }    ${ ("warningPass:" + func.warningPass.toString()).blue }`);
-        console.log(funcBuilder(func));
+        console.log(`${ id.red }    ${ name.green }    ${ type.blue }    ${ method.yellow }    ${ "warningPass:".blue + func.warningPass.toString().green }`);
+        console.log(funcBuilder(func).trim());
     }
     else {
         console.log("没有找到此接口");
     }
 }
 
+//根据关键字查询接口列表
+function showSearchApiList (funcList, keyword) {
+    keyword = keyword.toLowerCase().trim();
+    let searchList = funcList.filter(func => {
+        let name = funcName(func).toLowerCase().trim();
+        return name.indexOf(keyword) > -1;
+    });
+    showAllApi(searchList);
+}
 
+async function addNewApi (funcList, jsonPath, jsPath) {
+    let idList = funcList.map(func => func.id);
+    let max = Math.max(...idList);
+    let id = max + 1;
+    console.log("请在下方输入接口的基本信息".green);
+    let type = "";
+    while (type != "O" &&
+           type != "L" &&
+           type != "P" &&
+           type != "A" &&
+           type != "AO" &&
+           type != "R") {
+        type = await readLine("type(O,L,P,A,AO,R)：".blue);
+        type = type.toUpperCase().trim();
+    }
+    let name = "";
+    while (!name) {
+        name = await readLine("请输入接口名称：".blue);
+    }
+    let url = "";
+    while (!url) {
+        url = await readLine("请输入接口地址：".blue);
+    }
+    let method = "";
+    while (!method) {
+        method = await readLine("请输入请求方法：".blue);
+        method = method.toLowerCase().trim();
+    }
+    let warningPass = true;
+    let warningPassText = "warningPass";
+    while (warningPassText != "y" &&
+           warningPassText != "n" &&
+           warningPassText != "") {
+        warningPassText = await readLine("警告通过(Y/n)：".blue);
+        warningPassText = warningPassText.toLowerCase().trim();
+    }
+    if (warningPassText == "n") {
+        warningPass = false;
+    }
+    else {
+        warningPass = true;
+    }
+    let remark = await readLine("注释：".blue);
+    let funcObj = {
+        id: id,
+        type: type,
+        name: name,
+        url: url,
+        method: method,
+        warningPass: warningPass,
+        remark: remark,
+    };
+    funcList.push(funcObj);
+    buildJsonFile(funcList, jsonPath);
+    buildApiFile(jsonPath, jsPath);
+}
+
+
+//生成Json文件
+function buildJsonFile (funcList, jsonPath) {
+    let jsonStr = JSON.stringify(funcList, null, 4);
+    fs.writeFileSync(jsonPath, jsonStr);
+}
 
 //生成接口文件
 function buildApiFile (jsonPath, jsPath) {
     let funcList = getFuncListFromFile(jsonPath);
-    // showAllApi(funcList);
-    showApiDetailById(funcList, 2);
     writeApiListToJsFile(funcList, jsPath);
 }
 
@@ -159,7 +228,15 @@ function buildApiFile (jsonPath, jsPath) {
 // console.log("接口导出代码生成成功！");
 // process.exit();
 
-async function readLine () {
+async function readLine (ques) {
+    return new Promise((resolve, reject) => {
+        readLineSys.question(ques, answer => {
+            resolve(answer);
+        });
+    });
+}
+
+async function readLineCmd () {
     return new Promise((resolve, reject) => {
         readLineSys.question(">> ", answer => {
             resolve(answer);
@@ -176,7 +253,7 @@ readLineSys.on("close", () => {
     funcList = getFuncListFromFile("./api.json");
     console.log("欢迎使用鸡毛接口管理工具！".green);
     while (true) {
-        let text = await readLine();
+        let text = await readLineCmd();
         text = text.toLowerCase().trim();
         let id = Number(text);
         if (text == "l") {
@@ -185,8 +262,14 @@ readLineSys.on("close", () => {
         else if (!isNaN(id)) {
             showApiDetailById(funcList, id);
         }
+        else if (text == "add") {
+            addNewApi(funcList, "./api.json", "../../src/api/index.js");
+        }
         else if (text == "q") {
             break;
+        }
+        else {
+            showSearchApiList(funcList, text);
         }
     }
     readLineSys.close();
