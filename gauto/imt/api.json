@@ -1,0 +1,48 @@
+
+[
+    {
+        "id": 1,
+        "type": "O",
+        "name": "getPlanMetaById",
+        "url": "/api/xsea/plan/getPlanMetaById",
+        "method": "post",
+        "warningPass": false,
+        "remark": ""
+    },
+    {
+        "id": 2,
+        "type": "L",
+        "name": "getPlanSceneList",
+        "url": "/api/xsea/plan/queryPlanSceneList",
+        "method": "post",
+        "warningPass": true,
+        "remark": ""
+    },
+    {
+        "id": 3,
+        "type": "P",
+        "name": "getPlanPage",
+        "url": "/api/xsea/plan/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": ""
+    },
+    {
+        "id": 4,
+        "type": "A",
+        "name": "actStopTest",
+        "url": "/api/xsea/sceneExec/stop",
+        "method": "post",
+        "warningPass": true,
+        "remark": ""
+    },
+    {
+        "id": 5,
+        "type": "AO",
+        "name": "actSaveSceneMeta",
+        "url": "/api/xsea/scene/saveSceneMeta",
+        "method": "post",
+        "warningPass": true,
+        "remark": ""
+    }
+]
