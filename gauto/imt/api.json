@@ -2,82 +2,19 @@
     {
         "id": 1,
         "type": "O",
-        "name": "getPlanMetaById",
-        "url": "/api/xsea/plan/getPlanMetaById",
+        "name": "getStudent",
+        "url": "/api/student/get",
         "method": "post",
-        "warningPass": false,
-        "remark": "暂未填写接口注释"
+        "warningPass": true,
+        "remark": "获得一个学生的基本信息"
     },
     {
         "id": 2,
-        "type": "L",
-        "name": "getPlanSceneList",
-        "url": "/api/xsea/plan/queryPlanSceneList",
-        "method": "post",
-        "warningPass": true,
-        "remark": ""
-    },
-    {
-        "id": 3,
-        "type": "P",
-        "name": "getPlanPage",
-        "url": "/api/xsea/plan/list",
-        "method": "post",
-        "warningPass": true,
-        "remark": ""
-    },
-    {
-        "id": 4,
-        "type": "A",
-        "name": "stopTest",
-        "url": "/api/xsea/sceneExec/stop",
-        "method": "post",
-        "warningPass": true,
-        "remark": ""
-    },
-    {
-        "id": 5,
-        "type": "AO",
-        "name": "saveSceneMeta",
-        "url": "/api/xsea/scene/saveSceneMeta",
-        "method": "post",
-        "warningPass": true,
-        "remark": ""
-    },
-    {
-        "id": 6,
-        "type": "AO",
-        "name": "save",
-        "url": "/api/save",
-        "method": "POST",
-        "warningPass": true,
-        "remark": "保存"
-    },
-    {
-        "id": 7,
         "type": "A",
         "name": "delete",
         "url": "/api/delete",
         "method": "post",
         "warningPass": true,
         "remark": "删除"
-    },
-    {
-        "id": 8,
-        "type": "A",
-        "name": "update",
-        "url": "/api/update",
-        "method": "post",
-        "warningPass": true,
-        "remark": "更新数据"
-    },
-    {
-        "id": 9,
-        "type": "O",
-        "name": "haha",
-        "url": "/api/gethaha",
-        "method": "post",
-        "warningPass": true,
-        "remark": "哈哈"
     }
 ]
