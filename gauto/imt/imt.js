@@ -109,7 +109,6 @@ ${ bottomCode(funcList) }
     return code;
 }
 
-
 //显示所有接口信息
 function showAllApi (funcList) {
     let list = funcList.map(func => {
@@ -142,6 +141,7 @@ function showApiDetailById (funcList, id) {
         console.log("没有找到此接口");
     }
 }
+
 
 
 //生成接口文件
