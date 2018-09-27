@@ -146,6 +146,9 @@ ${ bottomCode(funcList) }
     async function addNewApi (funcList) {
         let idList = funcList.map(func => func.id);
         let max = Math.max(...idList);
+        if (max.toString() == "-Infinity") {
+            max = 0;
+        }
         let id = max + 1;
         console.log("请在下方输入接口的基本信息".green);
         let type = "";
@@ -204,8 +207,17 @@ ${ bottomCode(funcList) }
 //#region 文件IO方法
     //从JSON文件之中读取函数对象列表
     function readFuncList (filePath) {
-        let jsonStr = fs.readFileSync(filePath);
-        return JSON.parse(jsonStr);
+        let jsonStr;
+        let funcList;
+        try {
+            jsonStr = fs.readFileSync(filePath);
+            funcList = JSON.parse(jsonStr);
+        }
+        catch (e) {
+            funcList = [];
+            writeFuncList(funcList, filePath);
+        }
+        return funcList;
     }
     //向JSON文件之中写入函数对象列表
     function writeFuncList (funcList, filePath) {

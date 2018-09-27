@@ -1,20 +1,47 @@
 [
     {
         "id": 1,
-        "type": "O",
-        "name": "getStudent",
-        "url": "/api/student/get",
+        "type": "L",
+        "name": "GetPlanSceneList",
+        "url": "/api/xsea/plan/queryPlanSceneList",
         "method": "post",
         "warningPass": true,
-        "remark": "获得一个学生的基本信息"
+        "remark": "获取一个计划的场景列表"
     },
     {
         "id": 2,
-        "type": "A",
-        "name": "delete",
-        "url": "/api/delete",
+        "type": "P",
+        "name": "GetPlanPage",
+        "url": "/api/xsea/plan/list",
         "method": "post",
         "warningPass": true,
-        "remark": "删除"
+        "remark": "获取计划分页"
+    },
+    {
+        "id": 3,
+        "type": "O",
+        "name": "GetPlanMetaById",
+        "url": "/api/xsea/plan/getPlanMetaById",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取计划的基本信息"
+    },
+    {
+        "id": 4,
+        "type": "A",
+        "name": "ActStopTest",
+        "url": "/api/xsea/sceneExec/stop",
+        "method": "post",
+        "warningPass": true,
+        "remark": "停止场景运行的接口"
+    },
+    {
+        "id": 5,
+        "type": "AO",
+        "name": "ActSaveSceneMeta",
+        "url": "/api/xsea/scene/saveSceneMeta",
+        "method": "post",
+        "warningPass": true,
+        "remark": "新增一个场景"
     }
 ]

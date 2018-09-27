@@ -24,17 +24,17 @@
     export default {
         name: 'App',
         async mounted () {
-            let result1 = await api.getGetPlanSceneListL0002({
+            let result1 = await api.getGetPlanSceneListL0001({
                 id: "1058654505664512",
             });
-            let result2 = await api.getGetPlanPageP0003({
+            let result2 = await api.getGetPlanPageP0002({
                 condition: {
                     name: ""
                 },
                 pageNum: 1,
                 pageSize: 7,
             });
-            let result3 = await api.getGetPlanMetaByIdO0001({
+            let result3 = await api.getGetPlanMetaByIdO0003({
                 id: "1058654505664512",
             });
             let result4 = await api.actActStopTestA0004({
