@@ -248,7 +248,7 @@ readLineSys.on("close", () => {
     console.log("谢谢使用".green);
 });
 
-(async () => {ß
+(async () => {
     let funcList = [];
     funcList = getFuncListFromFile("./api.json");
     console.log("欢迎使用鸡毛接口管理工具！".green);
