@@ -43,5 +43,14 @@
         "method": "post",
         "warningPass": true,
         "remark": "新增一个场景"
+    },
+    {
+        "id": 6,
+        "type": "R",
+        "name": "test",
+        "url": "/api/test",
+        "method": "post",
+        "warningPass": true,
+        "remark": "测试接口"
     }
 ]
