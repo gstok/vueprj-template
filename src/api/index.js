@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-09-27 21:50:44
+//自动生成的接口导入代码 生成时间 2018-09-28 10:47:24
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -54,6 +54,14 @@ async function api_resTestR0006 (params) {
 }
 
 
+//保存信息
+async function api_actSaveAO0007 (params) {
+    let reqUrl = "/api/save";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
 
 export const getGetPlanSceneListL0001 = api_getGetPlanSceneListL0001;
 export const getGetPlanPageP0002 = api_getGetPlanPageP0002;
@@ -61,6 +69,7 @@ export const getGetPlanMetaByIdO0003 = api_getGetPlanMetaByIdO0003;
 export const actActStopTestA0004 = api_actActStopTestA0004;
 export const actActSaveSceneMetaAO0005 = api_actActSaveSceneMetaAO0005;
 export const resTestR0006 = api_resTestR0006;
+export const actSaveAO0007 = api_actSaveAO0007;
 
 export default {
     getGetPlanSceneListL0001: api_getGetPlanSceneListL0001,
@@ -69,5 +78,6 @@ export default {
     actActStopTestA0004: api_actActStopTestA0004,
     actActSaveSceneMetaAO0005: api_actActSaveSceneMetaAO0005,
     resTestR0006: api_resTestR0006,
+    actSaveAO0007: api_actSaveAO0007,
 };
 

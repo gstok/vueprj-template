@@ -52,5 +52,14 @@
         "method": "post",
         "warningPass": true,
         "remark": "测试接口"
+    },
+    {
+        "id": 7,
+        "type": "AO",
+        "name": "save",
+        "url": "/api/save",
+        "method": "post",
+        "warningPass": true,
+        "remark": "保存信息"
     }
 ]

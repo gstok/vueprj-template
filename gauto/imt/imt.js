@@ -14,6 +14,8 @@ let jsonPath = "./api.json";
 let apiPath = "../../src/api/index.js";
 
 
+
+
 //生成函数名
 function funcName (func) {
     let type = func.type.toUpperCase();
@@ -32,7 +34,7 @@ function funcName (func) {
     else if (type == "R") {
         prefix = "res";
     }
-    let id = S(func.id.toString()).padLeft(4, '0');
+    let id = S(func.id.toString()).padLeft(4, '0').toString();
     return `${ prefix }${ name }${ type }${ id }`;
 }
 //根据接口函数对象生成函数代码
@@ -56,6 +58,11 @@ async function api_${ funcName(func) } (params) {
 `;
     return code;
 }
+
+
+
+
+//#region 代码生成方法
 //生成顶部引用代码
 function topCode () {
     let code = `
@@ -65,7 +72,7 @@ import respChanger from "@/common/respChanger";
 `;
     return code;
 }
-//生成中部接口代码
+//生成中部接口定义代码
 function middleCode (funcList) {
     let code = `
 ${ funcList.map(func => {
@@ -74,7 +81,7 @@ ${ funcList.map(func => {
 `;
     return code;
 }
-//生成底部导出代码
+//生成底部接口导出代码
 function bottomCode (funcList) {
     let code = `
 ${ funcList.map(func => {
@@ -100,7 +107,35 @@ ${ bottomCode(funcList) }
 `;
     return code;
 }
+//#endregion
 
+//#region 文件IO方法
+    //从JSON文件之中读取函数对象列表
+    function readFuncList (filePath) {
+        let jsonStr;
+        let funcList;
+        try {
+            jsonStr = fs.readFileSync(filePath);
+            funcList = JSON.parse(jsonStr);
+        }
+        catch (e) {
+            funcList = [];
+            writeFuncList(funcList, filePath);
+            console.log("读取JSON文件错误，已经创建空文件！".red);
+        }
+        return funcList;
+    }
+    //向JSON文件之中写入函数对象列表
+    function writeFuncList (funcList, filePath) {
+        let jsonStr = JSON.stringify(funcList, null, 4);
+        fs.writeFileSync(filePath, jsonStr);
+    }
+    //根据函数对象列表写API导出文件
+    function writeApiExportFile (funcList, filePath) {
+        let code = exportCode(funcList);
+        fs.writeFileSync(filePath, code);
+    }
+//#endregion
 
 //#region 功能方法
     //显示所有接口列表
@@ -201,36 +236,33 @@ ${ bottomCode(funcList) }
         funcList.push(funcObj);
         writeFuncList(funcList, jsonPath);
         writeApiExportFile(funcList, apiPath);
+        console.log("新增接口成功，接口导出文件已更新！".green + `    ${ "接口Id为：".blue }${ funcObj.id.toString().green }`);
+        showApiDetailById(funcList, funcObj.id);
+    }
+    //从项目之中删除一个接口
+    async function deleteFunc (funcList, id) {
+        let index = funcList.findIndex(func => func.id == id);
+        if (index > -1) {
+            showApiDetailById(funcList, id);
+            let text = "text";
+            while (text != "y" &&
+                   text != "n" &&
+                   text != "") {
+                text = await readLine(`确认删除Id为 ${ id } 的函数(N/y)：`);
+                text = text.toLowerCase().trim();
+            }
+            if (text == "y") {
+                funcList.splice(index, 1);
+                writeFuncList(funcList, jsonPath);
+                writeApiExportFile(funcList, apiPath);
+                console.log("新增删除成功，接口导出文件已更新！".green); 
+            }
+        }
+        else {
+            console.log("无此Id！".red);
+        }
     }
 //#endregion
-
-//#region 文件IO方法
-    //从JSON文件之中读取函数对象列表
-    function readFuncList (filePath) {
-        let jsonStr;
-        let funcList;
-        try {
-            jsonStr = fs.readFileSync(filePath);
-            funcList = JSON.parse(jsonStr);
-        }
-        catch (e) {
-            funcList = [];
-            writeFuncList(funcList, filePath);
-        }
-        return funcList;
-    }
-    //向JSON文件之中写入函数对象列表
-    function writeFuncList (funcList, filePath) {
-        let jsonStr = JSON.stringify(funcList, null, 4);
-        fs.writeFileSync(filePath, jsonStr);
-    }
-    //根据函数对象列表写API导出文件
-    function writeApiExportFile (funcList, filePath) {
-        let code = exportCode(funcList);
-        fs.writeFileSync(filePath, code);
-    }
-//#endregion
-
 
 async function readLine (ques) {
     return new Promise((resolve, reject) => {
@@ -240,45 +272,74 @@ async function readLine (ques) {
     });
 }
 
-async function readLineCmd () {
-    return new Promise((resolve, reject) => {
-        readLineSys.question(">> ", answer => {
-            resolve(answer);
-        });
-    });
-}
-
 readLineSys.on("close", () => {
     console.log("谢谢使用".green);
 });
 
-
-
-
-
+function showLineTop () {
+    console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+}
+function showLineBottom () {
+    console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+}
 
 //主函数
 async function main () {
     let funcList = readFuncList(jsonPath);
     console.log("欢迎使用鸡毛接口管理工具！".green);
-    while (true) {
-        let text = await readLineCmd();
+    let text = "";
+    while (text != "q") {
+        text = await readLine(">> ");
         text = text.toLowerCase().trim();
         let id = Number(text);
-        if (text == "l") {
-            showAllApi(funcList);
-        }
-        else if (!isNaN(id)) {
+        if (!isNaN(id)) {
+            showLineTop();
             showApiDetailById(funcList, id);
-        }
-        else if (text == "add") {
-            addNewApi(funcList, "./api.json", "../../src/api/index.js");
-        }
-        else if (text == "q") {
-            break;
+            showLineBottom();
         }
         else {
-            showSearchApiList(funcList, text);
+            if (text == "l" || text == "ll") {
+                showLineTop();
+                showAllApi(funcList);
+                showLineBottom();
+            }
+            else if (text.startsWith("s ")) {
+                let strList = text.split(/[\s]+/);
+                if (strList.length == 2) {
+                    let keyword = strList[1].trim();
+                    showLineTop();
+                    showSearchApiList(funcList, keyword);
+                    showLineBottom();
+                }
+                else {
+                    console.log("搜索关键词输入错误！".red);
+                }
+            }
+            else if (text == "a" || text == "add") {
+                showLineTop();
+                await addNewApi(funcList);
+                showLineBottom();
+            }
+            else if (text.startsWith("d") || text.startsWith("del")) {
+                let strList = text.split(/[\s]+/);
+                if (strList.length == 2) {
+                    let id = Number(strList[1].trim());
+                    if (!isNaN(id)) {
+                        showLineTop();
+                        await deleteFunc (funcList, id);
+                        showLineBottom();
+                    }
+                    else {
+                        console.log("Id输入错误！".red);
+                    }
+                }
+                else {
+                    console.log("命令输入错误！".red);
+                }       
+            }
+            else {
+                console.log("未知命令！");
+            }
         }
     }
     readLineSys.close();
