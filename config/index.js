@@ -15,7 +15,7 @@ module.exports = {
             target: 'http://192.168.0.37:8099/',
             changeOrigin: true,
             secure: false,
-        },  
+        },
     },
 
     // Various Dev Server settings

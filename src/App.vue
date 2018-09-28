@@ -24,35 +24,7 @@
     export default {
         name: 'App',
         async mounted () {
-            let result1 = await api.getGetPlanSceneListL0001({
-                id: "1058654505664512",
-            });
-            let result2 = await api.getGetPlanPageP0002({
-                condition: {
-                    name: ""
-                },
-                pageNum: 1,
-                pageSize: 7,
-            });
-            let result3 = await api.getGetPlanMetaByIdO0003({
-                id: "1058654505664512",
-            });
-            let result4 = await api.actActStopTestA0004({
-                sceneId: "588406209141489915",
-            });
-            let result5 = await api.actActSaveSceneMetaAO0005({
-                planId: "1058654505664512",
-            });
 
-
-            
-            
-
-            console.log(result1);
-            console.log(result2);
-            console.log(result3);
-            console.log(result4);
-            console.log(result5);
         },
     }
 </script>

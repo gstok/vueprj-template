@@ -24,6 +24,8 @@
 </template>
 
 <script>
+    import api from "../api";
+
     export default {
         name: "chart",
         props: {
@@ -111,7 +113,7 @@
             //#endregion
         },
         created () {
-
+            
         },
         mounted () {
             this.b_initChart();

@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-09-28 14:12:16
+//自动生成的接口导入代码 生成时间 2018-09-28 15:40:01
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -278,6 +278,38 @@ async function api_actCreatePlanAO0034 (params) {
 }
 
 
+//获取场景执行步骤日志
+async function api_getSceneExecLogListL0035 (params) {
+    let reqUrl = "/api/xsea/sceneExec/queryExecLogDetail";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//首页获取计划统计信息
+async function api_getPlanStatisticsO0036 (params) {
+    let reqUrl = "/api/xsea/index/getPlanStatistics";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//首页获取报告统计信息接口
+async function api_getReportStatisticsO0037 (params) {
+    let reqUrl = "/api/xsea/index/getReportStatistics";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取正在运行的计划列表
+async function api_getRunningPlanListL0038 (params) {
+    let reqUrl = "/api/xsea/index/runningPlanList";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -313,6 +345,10 @@ export const getScriptAssetListL0031 = api_getScriptAssetListL0031;
 export const getUserListL0032 = api_getUserListL0032;
 export const getAppListL0033 = api_getAppListL0033;
 export const actCreatePlanAO0034 = api_actCreatePlanAO0034;
+export const getSceneExecLogListL0035 = api_getSceneExecLogListL0035;
+export const getPlanStatisticsO0036 = api_getPlanStatisticsO0036;
+export const getReportStatisticsO0037 = api_getReportStatisticsO0037;
+export const getRunningPlanListL0038 = api_getRunningPlanListL0038;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -349,5 +385,9 @@ export default {
     getUserListL0032: api_getUserListL0032,
     getAppListL0033: api_getAppListL0033,
     actCreatePlanAO0034: api_actCreatePlanAO0034,
+    getSceneExecLogListL0035: api_getSceneExecLogListL0035,
+    getPlanStatisticsO0036: api_getPlanStatisticsO0036,
+    getReportStatisticsO0037: api_getReportStatisticsO0037,
+    getRunningPlanListL0038: api_getRunningPlanListL0038,
 };
 

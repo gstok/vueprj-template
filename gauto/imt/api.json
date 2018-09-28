@@ -304,5 +304,41 @@
         "method": "post",
         "warningPass": true,
         "remark": "创建一个计划接口，返回计划Id"
+    },
+    {
+        "id": 35,
+        "type": "L",
+        "name": "SceneExecLogList",
+        "url": "/api/xsea/sceneExec/queryExecLogDetail",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取场景执行步骤日志"
+    },
+    {
+        "id": 36,
+        "type": "O",
+        "name": "PlanStatistics",
+        "url": "/api/xsea/index/getPlanStatistics",
+        "method": "post",
+        "warningPass": true,
+        "remark": "首页获取计划统计信息"
+    },
+    {
+        "id": 37,
+        "type": "O",
+        "name": "ReportStatistics",
+        "url": "/api/xsea/index/getReportStatistics",
+        "method": "post",
+        "warningPass": true,
+        "remark": "首页获取报告统计信息接口"
+    },
+    {
+        "id": 38,
+        "type": "L",
+        "name": "runningPlanList",
+        "url": "/api/xsea/index/runningPlanList",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取正在运行的计划列表"
     }
 ]
