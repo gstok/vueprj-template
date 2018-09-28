@@ -241,5 +241,68 @@
         "method": "post",
         "warningPass": true,
         "remark": "开始压测一个场景"
+    },
+    {
+        "id": 28,
+        "type": "O",
+        "name": "SceneExecInfo",
+        "url": "/api/xsea/sceneExec/querySceneExecInfo",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取场景执行的实时基本信息"
+    },
+    {
+        "id": 29,
+        "type": "AO",
+        "name": "StopSceneExec",
+        "url": "/api/xsea/sceneExec/stop",
+        "method": "post",
+        "warningPass": true,
+        "remark": "停止场景的执行"
+    },
+    {
+        "id": 30,
+        "type": "O",
+        "name": "ScriptDetail",
+        "url": "/api/xsea/script/queryDetail",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取脚本详情信息"
+    },
+    {
+        "id": 31,
+        "type": "L",
+        "name": "ScriptAssetList",
+        "url": "/api/xsea/assetFile/queryByScriptId",
+        "method": "fetch",
+        "warningPass": true,
+        "remark": "获取脚本资产列表"
+    },
+    {
+        "id": 32,
+        "type": "L",
+        "name": "userList",
+        "url": "/api/xsea/user/fuzzyQuery",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取用户列表，支持模糊查询"
+    },
+    {
+        "id": 33,
+        "type": "L",
+        "name": "appList",
+        "url": "/api/xsea/app/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取系统内的应用列表"
+    },
+    {
+        "id": 34,
+        "type": "AO",
+        "name": "createPlan",
+        "url": "/api/xsea/plan/createPlan",
+        "method": "post",
+        "warningPass": true,
+        "remark": "创建一个计划接口，返回计划Id"
     }
 ]

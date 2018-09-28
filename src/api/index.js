@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-09-28 12:38:54
+//自动生成的接口导入代码 生成时间 2018-09-28 14:08:00
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -222,6 +222,62 @@ async function api_actStartSceneAO0027 (params) {
 }
 
 
+//获取场景执行的实时基本信息
+async function api_getSceneExecInfoO0028 (params) {
+    let reqUrl = "/api/xsea/sceneExec/querySceneExecInfo";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//停止场景的执行
+async function api_actStopSceneExecAO0029 (params) {
+    let reqUrl = "/api/xsea/sceneExec/stop";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//获取脚本详情信息
+async function api_getScriptDetailO0030 (params) {
+    let reqUrl = "/api/xsea/script/queryDetail";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取脚本资产列表
+async function api_getScriptAssetListL0031 (params) {
+    let reqUrl = "/api/xsea/assetFile/queryByScriptId";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取用户列表，支持模糊查询
+async function api_getUserListL0032 (params) {
+    let reqUrl = "/api/xsea/user/fuzzyQuery";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取系统内的应用列表
+async function api_getAppListL0033 (params) {
+    let reqUrl = "/api/xsea/app/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//创建一个计划接口，返回计划Id
+async function api_actCreatePlanAO0034 (params) {
+    let reqUrl = "/api/xsea/plan/createPlan";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -250,6 +306,13 @@ export const actAddSceneScriptRelA0024 = api_actAddSceneScriptRelA0024;
 export const actModifySceneScriptRelA0025 = api_actModifySceneScriptRelA0025;
 export const actDeleteSceneScriptRelA0026 = api_actDeleteSceneScriptRelA0026;
 export const actStartSceneAO0027 = api_actStartSceneAO0027;
+export const getSceneExecInfoO0028 = api_getSceneExecInfoO0028;
+export const actStopSceneExecAO0029 = api_actStopSceneExecAO0029;
+export const getScriptDetailO0030 = api_getScriptDetailO0030;
+export const getScriptAssetListL0031 = api_getScriptAssetListL0031;
+export const getUserListL0032 = api_getUserListL0032;
+export const getAppListL0033 = api_getAppListL0033;
+export const actCreatePlanAO0034 = api_actCreatePlanAO0034;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -279,5 +342,12 @@ export default {
     actModifySceneScriptRelA0025: api_actModifySceneScriptRelA0025,
     actDeleteSceneScriptRelA0026: api_actDeleteSceneScriptRelA0026,
     actStartSceneAO0027: api_actStartSceneAO0027,
+    getSceneExecInfoO0028: api_getSceneExecInfoO0028,
+    actStopSceneExecAO0029: api_actStopSceneExecAO0029,
+    getScriptDetailO0030: api_getScriptDetailO0030,
+    getScriptAssetListL0031: api_getScriptAssetListL0031,
+    getUserListL0032: api_getUserListL0032,
+    getAppListL0033: api_getAppListL0033,
+    actCreatePlanAO0034: api_actCreatePlanAO0034,
 };
 
