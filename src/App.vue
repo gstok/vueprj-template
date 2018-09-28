@@ -8,13 +8,15 @@
         color: #2c3e50;
         margin-top: 60px;
     }
+
+    div {
+        box-sizing: border-box;
+    }
 </style>
 
 <template>
     <div id="app">
-        <!-- <fcGushi></fcGushi>
-        <dcDialog></dcDialog> -->
-        <router-view />
+        <ccStrategyLine></ccStrategyLine>
     </div>
 </template>
 
