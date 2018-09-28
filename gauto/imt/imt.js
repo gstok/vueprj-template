@@ -303,7 +303,7 @@ async function main () {
                 showAllApi(funcList);
                 showLineBottom();
             }
-            else if (text.startsWith("s ")) {
+            else if (text.startsWith("s ") || text.startsWith("search ")) {
                 let strList = text.split(/[\s]+/);
                 if (strList.length == 2) {
                     let keyword = strList[1].trim();
