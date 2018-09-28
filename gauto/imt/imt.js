@@ -337,6 +337,18 @@ async function main () {
                     console.log("命令输入错误！".red);
                 }       
             }
+            else if (text == "u" || text == "update") {
+                showLineTop();
+                funcList = readFuncList(jsonPath);
+                console.log("函数列表更新成功！".green);
+                showLineBottom();
+            }
+            else if (text == "w" || text == "write") {
+                showLineTop();
+                writeApiExportFile(funcList, apiPath);
+                console.log("API导出文件更新成功！".green);
+                showLineBottom();
+            }
             else {
                 console.log("未知命令！");
             }
