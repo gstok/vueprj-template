@@ -1,16 +1,283 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-09-28 10:54:52
+//自动生成的接口导入代码 生成时间 2018-09-28 12:30:06
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
 
 
+//计划分页接口
+async function api_getPlanPageP0001 (params) {
+    let reqUrl = "/api/xsea/plan/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "P", true);
+}
+
+
+//报告分页
+async function api_getReportPageP0002 (params) {
+    let reqUrl = "/api/xsea/report/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "P", true);
+}
+
+
+//脚本分页
+async function api_getScriptPageP0003 (params) {
+    let reqUrl = "/api/xsea/script/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "P", true);
+}
+
+
+//根据计划Id获取计划的Meta信息
+async function api_getPlanMetaByIdO0004 (params) {
+    let reqUrl = "/api/xsea/plan/getPlanMetaById";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//传入type和id，返回对应对象的label列表
+async function api_getObjectLabelsL0005 (params) {
+    let reqUrl = "/api/xsea/label/queryByIdAndType";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取一个计划的迭代列表
+async function api_getItersByPlanIdL0006 (params) {
+    let reqUrl = "/api/xsea/plan/getItersByPlanId";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取计划下的场景列表
+async function api_getPlanSceneListL0007 (params) {
+    let reqUrl = "/api/xsea/plan/queryPlanSceneList";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取计划的应用列表对象
+async function api_getPlanAppListO0008 (params) {
+    let reqUrl = "/api/xsea/plan/queryPlanAppList";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取计划下场景的统计信息
+async function api_getPlanSceneStatisticsO0009 (params) {
+    let reqUrl = "/api/xsea/plan/querySceneStatistics";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取计划下App的统计信息
+async function api_getPlanAppStatisticsO0010 (params) {
+    let reqUrl = "/api/xsea/plan/queryAppStatistics";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//根据类型获取系统label库列表
+async function api_getSysLabelListL0011 (params) {
+    let reqUrl = "/api/xsea/label/fuzzyQuery";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//保存一个系统Label，返回LabelId
+async function api_actSaveSysLabelAO0012 (params) {
+    let reqUrl = "/api/xsea/label/save";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//删除一个系统Label，返回状态
+async function api_actDelSysLabelA0013 (params) {
+    let reqUrl = "/api/xsea/label/delete";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//添加一个Label到对象
+async function api_actAddLabelToObjectA0014 (params) {
+    let reqUrl = "/api/xsea/label/addRelsLabels";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//在对象上删除一个Label
+async function api_actDelLabelInObjectA0015 (params) {
+    let reqUrl = "/api/xsea/label/delRelLabes";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//在计划中添加一个新场景，新场景为默认，返回场景Id
+async function api_actAddSceneInPlanAO0016 (params) {
+    let reqUrl = "/api/xsea/scene/saveSceneMeta";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//查询场景的详细信息
+async function api_getSceneDetailO0017 (params) {
+    let reqUrl = "/api/xsea/scene/querySceneDetail";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//查询场景的告警配置模板
+async function api_getSceneAlarmTempListL0018 (params) {
+    let reqUrl = "/api/xsea/alert/queryBySceneId";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//保存场景的Meta信息
+async function api_actSaveSceneMetaAO0019 (params) {
+    let reqUrl = "/api/xsea/scene/saveSceneMeta";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//获取场景关联的App列表
+async function api_getSceneRelateAppL0020 (params) {
+    let reqUrl = "/api/xsea/scene/getRelateApp";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//传入userNum评估压力机数量
+async function api_getCalculateMachineL0021 (params) {
+    let reqUrl = "/api/xsea/scene/calculateMachine";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//保存策略曲线
+async function api_actSaveStrategyAO0022 (params) {
+    let reqUrl = "/api/xsea/scene/saveStrategy";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//传入一个告警参数对象，保存此对象，根据Id
+async function api_actSaveAlarmInfoAO0023 (params) {
+    let reqUrl = "/api/xsea/alert/save";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//添加场景脚本关联
+async function api_actAddSceneScriptRelA0024 (params) {
+    let reqUrl = "/xsea/scene/addSceneScriptRel";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//修改场景脚本关联信息
+async function api_actModifySceneScriptRelA0025 (params) {
+    let reqUrl = "/api/xsea/scene/modifySceneScriptRel";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//删除场景脚本关联信息
+async function api_actDeleteSceneScriptRelA0026 (params) {
+    let reqUrl = "/api/xsea/scene/deleteSceneScriptRel";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//开始压测一个场景
+async function api_actStartSceneAO0027 (params) {
+    let reqUrl = "/api/xsea/sceneExec/start";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
 
 
 
+export const getPlanPageP0001 = api_getPlanPageP0001;
+export const getReportPageP0002 = api_getReportPageP0002;
+export const getScriptPageP0003 = api_getScriptPageP0003;
+export const getPlanMetaByIdO0004 = api_getPlanMetaByIdO0004;
+export const getObjectLabelsL0005 = api_getObjectLabelsL0005;
+export const getItersByPlanIdL0006 = api_getItersByPlanIdL0006;
+export const getPlanSceneListL0007 = api_getPlanSceneListL0007;
+export const getPlanAppListO0008 = api_getPlanAppListO0008;
+export const getPlanSceneStatisticsO0009 = api_getPlanSceneStatisticsO0009;
+export const getPlanAppStatisticsO0010 = api_getPlanAppStatisticsO0010;
+export const getSysLabelListL0011 = api_getSysLabelListL0011;
+export const actSaveSysLabelAO0012 = api_actSaveSysLabelAO0012;
+export const actDelSysLabelA0013 = api_actDelSysLabelA0013;
+export const actAddLabelToObjectA0014 = api_actAddLabelToObjectA0014;
+export const actDelLabelInObjectA0015 = api_actDelLabelInObjectA0015;
+export const actAddSceneInPlanAO0016 = api_actAddSceneInPlanAO0016;
+export const getSceneDetailO0017 = api_getSceneDetailO0017;
+export const getSceneAlarmTempListL0018 = api_getSceneAlarmTempListL0018;
+export const actSaveSceneMetaAO0019 = api_actSaveSceneMetaAO0019;
+export const getSceneRelateAppL0020 = api_getSceneRelateAppL0020;
+export const getCalculateMachineL0021 = api_getCalculateMachineL0021;
+export const actSaveStrategyAO0022 = api_actSaveStrategyAO0022;
+export const actSaveAlarmInfoAO0023 = api_actSaveAlarmInfoAO0023;
+export const actAddSceneScriptRelA0024 = api_actAddSceneScriptRelA0024;
+export const actModifySceneScriptRelA0025 = api_actModifySceneScriptRelA0025;
+export const actDeleteSceneScriptRelA0026 = api_actDeleteSceneScriptRelA0026;
+export const actStartSceneAO0027 = api_actStartSceneAO0027;
 
 export default {
-
+    getPlanPageP0001: api_getPlanPageP0001,
+    getReportPageP0002: api_getReportPageP0002,
+    getScriptPageP0003: api_getScriptPageP0003,
+    getPlanMetaByIdO0004: api_getPlanMetaByIdO0004,
+    getObjectLabelsL0005: api_getObjectLabelsL0005,
+    getItersByPlanIdL0006: api_getItersByPlanIdL0006,
+    getPlanSceneListL0007: api_getPlanSceneListL0007,
+    getPlanAppListO0008: api_getPlanAppListO0008,
+    getPlanSceneStatisticsO0009: api_getPlanSceneStatisticsO0009,
+    getPlanAppStatisticsO0010: api_getPlanAppStatisticsO0010,
+    getSysLabelListL0011: api_getSysLabelListL0011,
+    actSaveSysLabelAO0012: api_actSaveSysLabelAO0012,
+    actDelSysLabelA0013: api_actDelSysLabelA0013,
+    actAddLabelToObjectA0014: api_actAddLabelToObjectA0014,
+    actDelLabelInObjectA0015: api_actDelLabelInObjectA0015,
+    actAddSceneInPlanAO0016: api_actAddSceneInPlanAO0016,
+    getSceneDetailO0017: api_getSceneDetailO0017,
+    getSceneAlarmTempListL0018: api_getSceneAlarmTempListL0018,
+    actSaveSceneMetaAO0019: api_actSaveSceneMetaAO0019,
+    getSceneRelateAppL0020: api_getSceneRelateAppL0020,
+    getCalculateMachineL0021: api_getCalculateMachineL0021,
+    actSaveStrategyAO0022: api_actSaveStrategyAO0022,
+    actSaveAlarmInfoAO0023: api_actSaveAlarmInfoAO0023,
+    actAddSceneScriptRelA0024: api_actAddSceneScriptRelA0024,
+    actModifySceneScriptRelA0025: api_actModifySceneScriptRelA0025,
+    actDeleteSceneScriptRelA0026: api_actDeleteSceneScriptRelA0026,
+    actStartSceneAO0027: api_actStartSceneAO0027,
 };
 

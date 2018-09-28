@@ -1,1 +1,245 @@
-[]
+[
+    {
+        "id": 1,
+        "type": "P",
+        "name": "planPage",
+        "url": "/api/xsea/plan/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "计划分页接口"
+    },
+    {
+        "id": 2,
+        "type": "P",
+        "name": "reportPage",
+        "url": "/api/xsea/report/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "报告分页"
+    },
+    {
+        "id": 3,
+        "type": "P",
+        "name": "scriptPage",
+        "url": "/api/xsea/script/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "脚本分页"
+    },
+    {
+        "id": 4,
+        "type": "O",
+        "name": "planMetaById",
+        "url": "/api/xsea/plan/getPlanMetaById",
+        "method": "post",
+        "warningPass": true,
+        "remark": "根据计划Id获取计划的Meta信息"
+    },
+    {
+        "id": 5,
+        "type": "L",
+        "name": "ObjectLabels",
+        "url": "/api/xsea/label/queryByIdAndType",
+        "method": "post",
+        "warningPass": true,
+        "remark": "传入type和id，返回对应对象的label列表"
+    },
+    {
+        "id": 6,
+        "type": "L",
+        "name": "ItersByPlanId",
+        "url": "/api/xsea/plan/getItersByPlanId",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取一个计划的迭代列表"
+    },
+    {
+        "id": 7,
+        "type": "L",
+        "name": "PlanSceneList",
+        "url": "/api/xsea/plan/queryPlanSceneList",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取计划下的场景列表"
+    },
+    {
+        "id": 8,
+        "type": "O",
+        "name": "PlanAppList",
+        "url": "/api/xsea/plan/queryPlanAppList",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取计划的应用列表对象"
+    },
+    {
+        "id": 9,
+        "type": "O",
+        "name": "PlanSceneStatistics",
+        "url": "/api/xsea/plan/querySceneStatistics",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取计划下场景的统计信息"
+    },
+    {
+        "id": 10,
+        "type": "O",
+        "name": "PlanAppStatistics",
+        "url": "/api/xsea/plan/queryAppStatistics",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取计划下App的统计信息"
+    },
+    {
+        "id": 11,
+        "type": "L",
+        "name": "sysLabelList",
+        "url": "/api/xsea/label/fuzzyQuery",
+        "method": "post",
+        "warningPass": true,
+        "remark": "根据类型获取系统label库列表"
+    },
+    {
+        "id": 12,
+        "type": "AO",
+        "name": "saveSysLabel",
+        "url": "/api/xsea/label/save",
+        "method": "post",
+        "warningPass": true,
+        "remark": "保存一个系统Label，返回LabelId"
+    },
+    {
+        "id": 13,
+        "type": "A",
+        "name": "delSysLabel",
+        "url": "/api/xsea/label/delete",
+        "method": "post",
+        "warningPass": true,
+        "remark": "删除一个系统Label，返回状态"
+    },
+    {
+        "id": 14,
+        "type": "A",
+        "name": "addLabelToObject",
+        "url": "/api/xsea/label/addRelsLabels",
+        "method": "post",
+        "warningPass": true,
+        "remark": "添加一个Label到对象"
+    },
+    {
+        "id": 15,
+        "type": "A",
+        "name": "delLabelInObject",
+        "url": "/api/xsea/label/delRelLabes",
+        "method": "post",
+        "warningPass": true,
+        "remark": "在对象上删除一个Label"
+    },
+    {
+        "id": 16,
+        "type": "AO",
+        "name": "addSceneInPlan",
+        "url": "/api/xsea/scene/saveSceneMeta",
+        "method": "post",
+        "warningPass": true,
+        "remark": "在计划中添加一个新场景，新场景为默认，返回场景Id"
+    },
+    {
+        "id": 17,
+        "type": "O",
+        "name": "sceneDetail",
+        "url": "/api/xsea/scene/querySceneDetail",
+        "method": "post",
+        "warningPass": true,
+        "remark": "查询场景的详细信息"
+    },
+    {
+        "id": 18,
+        "type": "L",
+        "name": "sceneAlarmTempList",
+        "url": "/api/xsea/alert/queryBySceneId",
+        "method": "post",
+        "warningPass": true,
+        "remark": "查询场景的告警配置模板"
+    },
+    {
+        "id": 19,
+        "type": "AO",
+        "name": "saveSceneMeta",
+        "url": "/api/xsea/scene/saveSceneMeta",
+        "method": "post",
+        "warningPass": true,
+        "remark": "保存场景的Meta信息"
+    },
+    {
+        "id": 20,
+        "type": "L",
+        "name": "SceneRelateApp",
+        "url": "/api/xsea/scene/getRelateApp",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取场景关联的App列表"
+    },
+    {
+        "id": 21,
+        "type": "L",
+        "name": "calculateMachine",
+        "url": "/api/xsea/scene/calculateMachine",
+        "method": "post",
+        "warningPass": true,
+        "remark": "传入userNum评估压力机数量"
+    },
+    {
+        "id": 22,
+        "type": "AO",
+        "name": "saveStrategy",
+        "url": "/api/xsea/scene/saveStrategy",
+        "method": "post",
+        "warningPass": true,
+        "remark": "保存策略曲线"
+    },
+    {
+        "id": 23,
+        "type": "AO",
+        "name": "saveAlarmInfo",
+        "url": "/api/xsea/alert/save",
+        "method": "post",
+        "warningPass": true,
+        "remark": "传入一个告警参数对象，保存此对象，根据Id"
+    },
+    {
+        "id": 24,
+        "type": "A",
+        "name": "addSceneScriptRel",
+        "url": "/xsea/scene/addSceneScriptRel",
+        "method": "post",
+        "warningPass": true,
+        "remark": "添加场景脚本关联"
+    },
+    {
+        "id": 25,
+        "type": "A",
+        "name": "modifySceneScriptRel",
+        "url": "/api/xsea/scene/modifySceneScriptRel",
+        "method": "post",
+        "warningPass": true,
+        "remark": "修改场景脚本关联信息"
+    },
+    {
+        "id": 26,
+        "type": "A",
+        "name": "deleteSceneScriptRel",
+        "url": "/api/xsea/scene/deleteSceneScriptRel",
+        "method": "post",
+        "warningPass": true,
+        "remark": "删除场景脚本关联信息"
+    },
+    {
+        "id": 27,
+        "type": "AO",
+        "name": "startScene",
+        "url": "/api/xsea/sceneExec/start",
+        "method": "post",
+        "warningPass": true,
+        "remark": "开始压测一个场景"
+    }
+]

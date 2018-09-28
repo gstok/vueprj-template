@@ -255,7 +255,7 @@ ${ bottomCode(funcList) }
                 funcList.splice(index, 1);
                 writeFuncList(funcList, jsonPath);
                 writeApiExportFile(funcList, apiPath);
-                console.log("新增删除成功，接口导出文件已更新！".green); 
+                console.log("删除成功，接口导出文件已更新！".green); 
             }
         }
         else {
@@ -277,10 +277,10 @@ readLineSys.on("close", () => {
 });
 
 function showLineTop () {
-    console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
 }
 function showLineBottom () {
-    console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
 }
 
 //主函数
@@ -288,7 +288,7 @@ async function main () {
     let funcList = readFuncList(jsonPath);
     console.log("欢迎使用鸡毛接口管理工具！".green);
     let text = "";
-    while (text != "q") {
+    while (text != "q" && text != "quit") {
         text = await readLine(">> ");
         text = text.toLowerCase().trim();
         let id = Number(text);
@@ -348,6 +348,9 @@ async function main () {
                 writeApiExportFile(funcList, apiPath);
                 console.log("API导出文件更新成功！".green);
                 showLineBottom();
+            }
+            else if (text == "q" || text == "quit") {
+
             }
             else {
                 console.log("未知命令！");
