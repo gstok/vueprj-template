@@ -14,8 +14,6 @@ let jsonPath = "./api.json";
 let apiPath = "../../src/api/index.js";
 
 
-
-
 //生成函数名
 function funcName (func) {
     let type = func.type.toUpperCase();
@@ -58,8 +56,6 @@ async function api_${ funcName(func) } (params) {
 `;
     return code;
 }
-
-
 
 
 //#region 代码生成方法
@@ -109,6 +105,7 @@ ${ bottomCode(funcList) }
 }
 //#endregion
 
+
 //#region 文件IO方法
     //从JSON文件之中读取函数对象列表
     function readFuncList (filePath) {
@@ -136,6 +133,7 @@ ${ bottomCode(funcList) }
         fs.writeFileSync(filePath, code);
     }
 //#endregion
+
 
 //#region 功能方法
     //显示所有接口列表
@@ -263,6 +261,7 @@ ${ bottomCode(funcList) }
         }
     }
 //#endregion
+
 
 async function readLine (ques) {
     return new Promise((resolve, reject) => {
