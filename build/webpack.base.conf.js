@@ -101,5 +101,11 @@ module.exports = {
     new webpack.ProvidePlugin({
         UUID: "uuid/v4",
     }),
+    new webpack.ProvidePlugin({
+        Decimal: "decimal.js",
+    }),
+    new webpack.ProvidePlugin({
+        BigNumber: "bignumber.js",
+    }),
   ]
 }
