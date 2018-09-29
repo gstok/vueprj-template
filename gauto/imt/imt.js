@@ -314,6 +314,26 @@ async function main () {
                     console.log("搜索关键词输入错误！".red);
                 }
             }
+<<<<<<< HEAD
+=======
+            else if (text == "url") {
+                showLineTop();
+                showAllApiUrl(funcList);
+                showLineBottom();     
+            }
+            else if (text.startsWith("surl ")) {
+                let strList = text.split(/[\s]+/);
+                if (strList.length == 2) {
+                    let keyword = strList[1].trim();
+                    showLineTop();
+                    showSearchUrlApiList(funcList, keyword);
+                    showLineBottom();
+                }
+                else {
+                    console.log("搜索关键词输入错误！".red);
+                }
+            }
+>>>>>>> master
             else if (text == "a" || text == "add") {
                 showLineTop();
                 await addNewApi(funcList);
