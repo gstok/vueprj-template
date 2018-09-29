@@ -87,24 +87,30 @@
     import api from "../../api";
 
     export default {
-        name: "",
+        name: "nodeEditWindow",
         model: {
             prop: "show",
             event: "change",
         },
         props: {
+            //是否显示
             show: {
                 type: Boolean,
                 default: false,
             },
-            top: {
-                type: Number,
-                default: 0,
+            //小窗口位置
+            pos: {
+                type: Object,
+                default () {
+                    return {
+                        top: 0,
+                        left: 0,
+                        bottom: null,
+                        right: null,
+                    };
+                },
             },
-            left: {
-                type: Number,
-                default: 0,
-            },
+            //节点值
             value: {
                 type: Object,
                 default () {
@@ -133,7 +139,6 @@
             show (nv) {
                 this.myShow = nv;
             },
-
             myShow (nv) {
                 this.$emit("change", nv);
             },
@@ -147,9 +152,16 @@
 
             //#region 样式计算属性
                 autoNodeEditWindowStyle () {
+                    // let top = this.top + 14;
+                    // let left = this.left - 170 / 2;
+                    // if (left < 0) {
+                    //     left = 0;
+                    // }
                     return {
-                        top: `${ this.top }px`,
-                        left: `${ this.left }px`,
+                        top: `${ this.pos.top }px`,
+                        left: `${ this.pos.left }px`,
+                        bottom: `${ this.pos.bottom }px`,
+                        right: `${ this.pos.right }px`,
                     };
                 },
             //#endregion
@@ -158,11 +170,7 @@
             //#region 页面事件方法
                 //编辑结果提交事件
                 handleSubmit () {
-                    this.$emit("submit", {
-                        incVU: Number(this.myValue.incVU),
-                        keepS: Number(this.myValue.keepS),
-                    });
-                    this.$emit("change", false);
+                    this.b_submit();
                 },
 
                 handleWindowClick () {
@@ -171,6 +179,50 @@
             //#endregion
 
             //#region 业务逻辑方法
+                b_submit () {
+                    let incVU = Number(this.myValue.incVU);
+                    if (isNaN(incVU)) {
+                        this.$message({
+                            type: "warning",
+                            message: "用户数输入非法！",
+                        });
+                        return;
+                    }
+                    if (incVU < 0) {
+                        this.$message({
+                            type: "warning",
+                            message: "用户数增幅暂不可以为负数！",
+                        });
+                        return;     
+                    }
+                    if (this.myValue.keepS.toString().trim().length < 1) {
+                        this.$message({
+                            type: "warning",
+                            message: "请输入持续时间！",
+                        });
+                        return;
+                    }
+                    let keepS = Number(this.myValue.keepS);
+                    if (isNaN(keepS)) {
+                        this.$message({
+                            type: "warning",
+                            message: "持续时间输入非法！",
+                        });
+                        return;
+                    }
+                    if (keepS < 0) {
+                        this.$message({
+                            type: "warning",
+                            message: "持续时间不可以为负数！",
+                        });
+                        return;   
+                    }
+                    this.$emit("submit", {
+                        incVU: incVU,
+                        keepS: keepS,
+                    });
+                    // this.$emit("change", false);
+                },
             //#endregion
 
             //#region 接口访问方法
@@ -190,7 +242,7 @@
         },
         mounted () {
             $(document).click(() => {
-                this.$emit("change", false);
+                // this.$emit("change", false);
             });
         },
         components: {

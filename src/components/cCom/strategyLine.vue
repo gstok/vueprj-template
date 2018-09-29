@@ -20,7 +20,11 @@
 <template>
     <div class="chart">
         <div class="chartWarp" :style="autoChartWarpStyle"></div>
-        <fcNodeEditWindow v-model="show" :value="value" @submit="handleSubmitNode"/>
+        <fcNodeEditWindow
+            v-model="editNodeWindowsShow"
+            :value="nodeValue"
+            :pos="autoEditNodeWindowPos"
+            @submit="handleSubmitNode"/>
     </div>
 </template>
 
@@ -41,10 +45,10 @@
                     return [
                         {
                             incVU: 10,
-                            keepS: 1,
+                            keepS: 10,
                         },
                         {
-                            incVU: 5,
+                            incVU: 20,
                             keepS: 100,
                         },
                     ];
@@ -59,10 +63,18 @@
                 //#endregion
 
                 //#region 页面内容绑定数据
-                    show: true,
-                    value: {
-                        incVU: "22",
-                        keepS: 100,
+                    nodeValue: {
+                        incVU: "",
+                        keepS: "",
+                    },
+
+
+                    editMode: "add",
+                    editNodeIndex: -1,
+                    editNodeWindowsShow: true,
+                    editNodeWindowPos: {
+                        top: 0,
+                        left: 0,
                     },
                 //#endregion
 
@@ -71,7 +83,11 @@
             };
         },
         watch: {
-            autoOption () {
+            autoOption (nv) {
+                this.chart.setOption(nv);
+            },
+
+            autoEditNodeWindowPos (nv) {
 
             },
         },
@@ -176,7 +192,11 @@
                 //图表动态更新配置
                 autoOption () {
                     return {
-
+                        series: [
+                            {
+                                data: this.autoGraphData,
+                            },
+                        ],
                     };
                 },
             //#endregion
@@ -199,6 +219,42 @@
                     });
                     return list;
                 },
+
+                //根据节点Index自动计算出增幅数组Index
+                autoIncIndex () {
+                    if (this.editNodeIndex > -1) {
+                        return this.editNodeIndex - 1;
+                    }
+                    else {
+                        return -1;
+                    }
+                },
+
+                //自动计算出节点编辑窗口位置
+                autoEditNodeWindowPos () {
+                    let top = null;
+                    let left = null;
+                    let bottom = null;
+                    let right = null;
+                    if (this.editMode == "add") {
+                        top = (this.height - 100) / 2;
+                        right = 20;
+                    }
+                    else if (this.editMode == "edit") {
+                        if (this.editNodeIndex > -1) {
+                            let data = this.autoGraphData[this.editNodeIndex];
+                            let position = this.chart.convertToPixel({ seriesIndex: 0 }, data);
+                            top = position[1];
+                            left = position[0];
+                        }
+                    }
+                    return {
+                        top: top,
+                        left: left,
+                        bottom: bottom,
+                        right: right,
+                    };
+                },
             //#endregion
 
             //#region 页面样式计算属性
@@ -211,8 +267,18 @@
         },
         methods: {
             //#region 页面事件方法
-                handleSubmitNode (value) {
-                    console.log(value);
+                handleSubmitNode (nodeValue) {
+                    if (this.editMode == "add") {
+                        this.b_addNode(nodeValue);
+                    }
+                    else if (this.editMode == "edit") {
+                        this.b_updateNode(nodeValue);
+                    }
+                },
+
+                //策略折线节点点击事件
+                handleNodeClick (params) {
+                    this.b_editNode(params.dataIndex);
                 },
             //#endregion
 
@@ -221,11 +287,52 @@
                 b_initChart () {
                     this.chartDom = this.$el.querySelector(".chartWarp");
                     this.chart = ECharts.init(this.chartDom);
+                    this.chart.on("click", params => {
+                        if (params.componentType == "series") {
+                            this.handleNodeClick(params);
+                        }
+                    });
                     this.chart.setOption(this.autoOptionTemplate);
                 },
                 //更新图表
                 b_updateChart () {
                     this.chartDom.setOption(this.autoOption);
+                },
+                //添加节点
+                b_addNode (nodeValue) {
+                    this.incList.push(nodeValue);
+                },
+                //编辑节点
+                b_editNode (nodeIndex) {
+                    this.editMode = "edit";
+                    this.editNodeIndex = nodeIndex;
+                    this.b_fillEditWindow();
+                    this.editNodeWindowsShow = true;
+                },
+                //更新节点
+                b_updateNode (nodeValue) {
+                    if (this.autoIncIndex > -1) {
+                        this.incList[this.autoIncIndex].incVU = nodeValue.incVU;
+                        this.incList[this.autoIncIndex].keepS = nodeValue.keepS;
+                        this.b_updateIncList();
+                    }
+                },
+                //强制触发incList更新
+                b_updateIncList () {
+                    this.incList.push({ });
+                    this.incList.pop();
+                },
+                //填充节点编辑窗体
+                b_fillEditWindow () {
+                    if (this.autoIncIndex > -1) {
+                        let incItem = this.incList[this.autoIncIndex];
+                        this.nodeValue.incVU = incItem.incVU;
+                        this.nodeValue.keepS = incItem.keepS;
+                    }
+                    else {
+                        this.nodeValue.incVU = "";
+                        this.nodeValue.keepS = "";
+                    }
                 },
             //#endregion
 
