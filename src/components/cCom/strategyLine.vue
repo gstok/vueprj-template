@@ -92,10 +92,6 @@
                 //图表初始化配置
                 autoOptionTemplate () {
                     return {
-                        tooltip: {
-                            show: false,
-                            trigger: 'item'
-                        },
                         grid: {
                             top: 10,
                             left: 0,

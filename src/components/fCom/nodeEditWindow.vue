@@ -6,7 +6,7 @@
         width: 170px;
         height: 100px;
         font-size: 12px;
-        padding: 16px 10px 6px 10px;
+        padding: 18px 10px 6px 10px;
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.1);
         display: flex;
@@ -29,8 +29,8 @@
     .nodeEditWindow > .topBar > i {
         font-size: 13px;
         cursor: pointer;
-        margin-top: 1px;
-        margin-right: 1px;
+        margin-top: 2px;
+        margin-right: 2px;
     }
 
     .nodeEditWindow > .inputWarp {
