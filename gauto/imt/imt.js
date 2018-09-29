@@ -366,7 +366,7 @@ async function main () {
                 showLineBottom();
             }
             else if (text == "q" || text == "quit") {
-                
+
             }
             else {
                 console.log("未知命令！");
