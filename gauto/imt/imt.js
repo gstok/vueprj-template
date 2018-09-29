@@ -342,7 +342,7 @@ async function main () {
             else if (text == "url") {
                 showLineTop();
                 showAllApiUrl(funcList);
-                showLineBottom();       
+                showLineBottom();     
             }
             else if (text.startsWith("surl ")) {
                 let strList = text.split(/[\s]+/);
