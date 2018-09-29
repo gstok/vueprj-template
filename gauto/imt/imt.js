@@ -144,10 +144,26 @@ ${ bottomCode(funcList) }
                 name: funcName(func),
                 type: func.type,
                 method: func.method,
+                url: func.url,
             };
         });
         list.forEach(item => {
-            console.log(`${ item.id.red }    ${ item.name.green }    ${ item.type.blue }    ${ item.method.yellow }`);
+            console.log(`${ item.id.red }    ${ item.name.green }    ${ item.type.blue }    ${ item.method.yellow }    ${ item.url.blue }`);
+        });
+    }
+    //显示所有接口的Url信息
+    function showAllApiUrl (funcList) {
+        let list = funcList.map(func => {
+            return {
+                id: S(func.id.toString()).padLeft(4, "0").toString(),
+                url: func.url,
+                type: func.type,
+                method: func.method,
+                name: funcName(func),
+            };
+        });
+        list.forEach(item => {
+            console.log(`${ item.id.red }    ${ item.url.blue }    ${ item.type.cyan }    ${ item.method.yellow }    ${ item.name.green }`);
         });
     }
     //根据Id查询接口详情
@@ -172,6 +188,15 @@ ${ bottomCode(funcList) }
         let searchList = funcList.filter(func => {
             let name = funcName(func).toLowerCase().trim();
             return name.indexOf(keyword) > -1;
+        });
+        showAllApi(searchList);
+    }
+    //根据关键字匹配接口Url进行查询并显示列表
+    function showSearchUrlApiList (funcList, keyword) {
+        keyword = keyword.toLowerCase().trim();
+        let searchList = funcList.filter(func => {
+            let url = func.url.toLowerCase().trim();
+            return url.indexOf(keyword) > -1;
         });
         showAllApi(searchList);
     }
