@@ -1,4 +1,5 @@
 //async接口管理工具，by鸡毛，2018年09月26日
+//尝试合并代码
 
 const fs = require("fs");
 const readLineCtr = require("readline");
