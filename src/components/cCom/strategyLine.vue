@@ -25,15 +25,20 @@
             :value="nodeValue"
             :pos="autoEditNodeWindowPos"
             @submit="handleSubmitNode"/>
+        <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
     </div>
 </template>
 
 <script>
     import api from "../../api";
 
+    let windowWidth = 170;
+    let windowHeight = 100;
+
     export default {
         name: "chart",
         props: {
+            //图表区域高度
             height: {
                 type: Number,
                 default: 320,
@@ -42,16 +47,7 @@
             incList: {
                 type: Array,
                 default () { 
-                    return [
-                        {
-                            incVU: 10,
-                            keepS: 10,
-                        },
-                        {
-                            incVU: 20,
-                            keepS: 100,
-                        },
-                    ];
+                    return [];
                 }
             },
         },
@@ -71,7 +67,7 @@
 
                     editMode: "add",
                     editNodeIndex: -1,
-                    editNodeWindowsShow: true,
+                    editNodeWindowsShow: false,
                     editNodeWindowPos: {
                         top: 0,
                         left: 0,
@@ -84,7 +80,7 @@
         },
         watch: {
             autoOption (nv) {
-                this.chart.setOption(nv);
+                this.b_updateChart();
             },
 
             autoEditNodeWindowPos (nv) {
@@ -237,15 +233,31 @@
                     let bottom = null;
                     let right = null;
                     if (this.editMode == "add") {
-                        top = (this.height - 100) / 2;
+                        top = (this.height - windowHeight) / 2;
                         right = 20;
                     }
                     else if (this.editMode == "edit") {
                         if (this.editNodeIndex > -1) {
                             let data = this.autoGraphData[this.editNodeIndex];
                             let position = this.chart.convertToPixel({ seriesIndex: 0 }, data);
-                            top = position[1];
-                            left = position[0];
+                            top = position[1] + 14;
+                            left = position[0] - windowWidth / 2;
+                            //窗口超界处理
+                            let $warp = $(this.$el);
+                            let width = $warp.width();
+                            let height = $warp.height();
+                            if (top < 0) {
+                                top = 0;
+                            }
+                            if (top + windowHeight > height) {
+                                top = height - windowHeight;
+                            }
+                            if (left < 0) {
+                                left = 0;
+                            }
+                            if (left + windowWidth > width) {
+                                left = width - windowWidth;
+                            }
                         }
                     }
                     return {
@@ -267,18 +279,30 @@
         },
         methods: {
             //#region 页面事件方法
-                handleSubmitNode (nodeValue) {
-                    if (this.editMode == "add") {
-                        this.b_addNode(nodeValue);
-                    }
-                    else if (this.editMode == "edit") {
-                        this.b_updateNode(nodeValue);
+                //新增节点按钮点击事件
+                handleAddNodeBtnClick () {
+                    this.editMode = "add";
+                    this.editNodeWindowsShow = true;
+                    this.b_clearEditWindow();
+                },
+                //策略折线节点点击事件
+                handleNodeClick (index) {
+                    this.editMode = "edit";
+                    this.editNodeIndex = index;
+                    if (this.autoIncIndex > -1) {
+                        let dstNode = this.incList[this.autoIncIndex];
+                        this.b_fillEditWindow(dstNode);
+                        this.editNodeWindowsShow = true;
                     }
                 },
-
-                //策略折线节点点击事件
-                handleNodeClick (params) {
-                    this.b_editNode(params.dataIndex);
+                //节点编辑窗体提交事件
+                handleSubmitNode (node) {
+                    if (this.editMode == "add") {
+                        this.b_addNode(node);
+                    }
+                    else if (this.editMode == "edit") {
+                        this.b_updateNode(node);
+                    }
                 },
             //#endregion
 
@@ -289,31 +313,24 @@
                     this.chart = ECharts.init(this.chartDom);
                     this.chart.on("click", params => {
                         if (params.componentType == "series") {
-                            this.handleNodeClick(params);
+                            this.handleNodeClick(params.dataIndex);
                         }
                     });
                     this.chart.setOption(this.autoOptionTemplate);
                 },
                 //更新图表
                 b_updateChart () {
-                    this.chartDom.setOption(this.autoOption);
+                    this.chart.setOption(this.autoOption);
                 },
                 //添加节点
-                b_addNode (nodeValue) {
-                    this.incList.push(nodeValue);
-                },
-                //编辑节点
-                b_editNode (nodeIndex) {
-                    this.editMode = "edit";
-                    this.editNodeIndex = nodeIndex;
-                    this.b_fillEditWindow();
-                    this.editNodeWindowsShow = true;
+                b_addNode (node) {
+                    this.incList.push(node);
                 },
                 //更新节点
-                b_updateNode (nodeValue) {
+                b_updateNode (node) {
                     if (this.autoIncIndex > -1) {
-                        this.incList[this.autoIncIndex].incVU = nodeValue.incVU;
-                        this.incList[this.autoIncIndex].keepS = nodeValue.keepS;
+                        this.incList[this.autoIncIndex].incVU = node.incVU;
+                        this.incList[this.autoIncIndex].keepS = node.keepS;
                         this.b_updateIncList();
                     }
                 },
@@ -323,16 +340,15 @@
                     this.incList.pop();
                 },
                 //填充节点编辑窗体
-                b_fillEditWindow () {
-                    if (this.autoIncIndex > -1) {
-                        let incItem = this.incList[this.autoIncIndex];
-                        this.nodeValue.incVU = incItem.incVU;
-                        this.nodeValue.keepS = incItem.keepS;
-                    }
-                    else {
-                        this.nodeValue.incVU = "";
-                        this.nodeValue.keepS = "";
-                    }
+                b_fillEditWindow (node) {
+                    this.b_clearEditWindow();
+                    this.nodeValue.incVU = node.incVU;
+                    this.nodeValue.keepS = node.keepS;
+                },
+                //清空节点编辑窗体
+                b_clearEditWindow () {
+                    this.nodeValue.incVU = "";
+                    this.nodeValue.keepS = "";
                 },
             //#endregion
 

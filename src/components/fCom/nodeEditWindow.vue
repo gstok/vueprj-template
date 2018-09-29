@@ -6,12 +6,31 @@
         width: 170px;
         height: 100px;
         font-size: 12px;
-        padding: 6px 10px 6px 10px;
+        padding: 16px 10px 6px 10px;
         border-radius: 3px;
         background-color: rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    .nodeEditWindow > .topBar {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 16px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        color: #bbb;
+    }
+
+    .nodeEditWindow > .topBar > i {
+        font-size: 13px;
+        cursor: pointer;
+        margin-top: 1px;
+        margin-right: 1px;
     }
 
     .nodeEditWindow > .inputWarp {
@@ -54,12 +73,16 @@
         class="nodeEditWindow"
         :style="autoNodeEditWindowStyle"
         @click.stop="handleWindowClick">
+        <div class="topBar">
+            <i @click="handleCloseClick" class="icon icon-closec"></i>
+        </div>
         <div class="inputWarp">
             <div>
                 <span>●</span>
                 <div>用户(VU)</div>
             </div>
             <input
+                class="userNum"
                 v-model="myValue.incVU"
                 type="number"
                 placeholder="用户增幅"
@@ -140,6 +163,9 @@
                 this.myShow = nv;
             },
             myShow (nv) {
+                if (nv) {
+                    this.b_inputFocus();
+                }
                 this.$emit("change", nv);
             },
         },
@@ -152,17 +178,20 @@
 
             //#region 样式计算属性
                 autoNodeEditWindowStyle () {
-                    // let top = this.top + 14;
-                    // let left = this.left - 170 / 2;
-                    // if (left < 0) {
-                    //     left = 0;
-                    // }
-                    return {
-                        top: `${ this.pos.top }px`,
-                        left: `${ this.pos.left }px`,
-                        bottom: `${ this.pos.bottom }px`,
-                        right: `${ this.pos.right }px`,
-                    };
+                    let posObj = { };
+                    if (this.pos.top !== null) {
+                        posObj.top = `${ this.pos.top }px`;
+                    }
+                    if (this.pos.left !== null) {
+                        posObj.left = `${ this.pos.left }px`;
+                    }
+                    if (this.pos.bottom !== null) {
+                        posObj.bottom = `${ this.pos.bottom }px`;
+                    }
+                    if (this.pos.right !== null) {
+                        posObj.right = `${ this.pos.right }px`;
+                    }
+                    return posObj;
                 },
             //#endregion
         },
@@ -172,13 +201,16 @@
                 handleSubmit () {
                     this.b_submit();
                 },
-
                 handleWindowClick () {
 
+                },
+                handleCloseClick () {
+                    this.myShow = false;
                 },
             //#endregion
 
             //#region 业务逻辑方法
+                //提交编辑结果
                 b_submit () {
                     let incVU = Number(this.myValue.incVU);
                     if (isNaN(incVU)) {
@@ -221,7 +253,13 @@
                         incVU: incVU,
                         keepS: keepS,
                     });
-                    // this.$emit("change", false);
+                    this.$emit("change", false);
+                },
+                //input获取输入焦点
+                b_inputFocus () {
+                    setTimeout(() => {
+                        $(this.$el).find(".userNum").focus();
+                    }, 0);
                 },
             //#endregion
 
@@ -241,9 +279,7 @@
 
         },
         mounted () {
-            $(document).click(() => {
-                // this.$emit("change", false);
-            });
+
         },
         components: {
 
