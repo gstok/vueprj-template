@@ -4,7 +4,7 @@ const fs = require("fs");
 let oldListJson = "json";
 
 function pathConvert (path) {
-    return path.replace("../src", "@");
+    return path.replace("../../src", "@");
 }
 
 //根据path获取组件名称
@@ -97,8 +97,8 @@ function buildExportFile (pathList) {
         };
     });
     let codeText = buildCode(fileList);
-    fs.writeFileSync("../src/components/index.js", codeText);
+    fs.writeFileSync("../../src/components/index.js", codeText);
 }
 
 //开始监听组件目录
-watchVueFile("../src/components");
+watchVueFile("../../src/components");
