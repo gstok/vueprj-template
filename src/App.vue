@@ -12,8 +12,6 @@
 
 <template>
     <div id="app">
-        <!-- <fcGushi></fcGushi>
-        <dcDialog></dcDialog> -->
         <router-view />
     </div>
 </template>
