@@ -286,6 +286,37 @@ ${ bottomCode(funcList) }
             console.log("无此Id！".red);
         }
     }
+    //修改一个接口信息
+    async function updateApi (funcList, id, field) {
+        let index = funcList.findIndex(func => func.id == id);
+        let func;
+        if (index > -1) {
+            func = funcList[index];
+            switch (field) {
+                case "TYPE": {
+                    console.log("请修改接口类型".green);
+                } break;
+                case "NAME": {
+
+                } break;
+                case "URL": {
+
+                } break;
+                case "METHOD": {
+
+                } break;
+                case "WARNINGPASS": {
+
+                } break;
+                case "REMARK": {
+
+                } break;
+            }
+        }
+        else {
+            console.log("无此接口！".red);
+        }
+    }
 //#endregion
 
 
@@ -362,7 +393,7 @@ async function main () {
                 await addNewApi(funcList);
                 showLineBottom();
             }
-            else if (text.startsWith("d") || text.startsWith("del")) {
+            else if (text.startsWith("d ") || text.startsWith("del ")) {
                 let strList = text.split(/[\s]+/);
                 if (strList.length == 2) {
                     let id = Number(strList[1].trim());
@@ -378,6 +409,33 @@ async function main () {
                 else {
                     console.log("命令输入错误！".red);
                 }       
+            }
+            //编辑功能
+            else if (text.startsWith("e ") || text.startsWith("edit ")) {
+                let strList = text.split(/[\s]+/);
+                if (strList.length == 3) {
+                    let id = Number(strList[1]);
+                    if (isNaN(id)) {
+                        console.log("接口Id输入错误！".red);
+                    }
+                    else {
+                        let field = strList[2].toUpperCase().trim();
+                        if (field != "TYPE" &&
+                            field != "NAME" &&
+                            field != "URL" &&
+                            field != "METHOD" &&
+                            field != "WARNINGPASS" &&
+                            field != "REMARK") {
+                            console.log("待编辑字段输入错误！".red);
+                        }
+                        else {
+                            await updateApi(funcList, id, field);
+                        }
+                    }
+                }
+                else {
+                    console.log("命令格式输入错误！".red);
+                }
             }
             else if (text == "u" || text == "update") {
                 showLineTop();
