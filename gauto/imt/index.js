@@ -297,16 +297,16 @@ ${ bottomCode(funcList) }
                     console.log("请修改接口类型".green);
                 } break;
                 case "NAME": {
-
+                    console.log("请修改接口名称".green);
                 } break;
                 case "URL": {
-
+                    console.log("请修改接口地址".green);
                 } break;
                 case "METHOD": {
-
+                    console.log("请修改接口方法".green);
                 } break;
                 case "WARNINGPASS": {
-
+                    console.log("请修改接口".green);
                 } break;
                 case "REMARK": {
 
