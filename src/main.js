@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 import components from "./components";
 import "element-ui/lib/theme-chalk/index.css";
-import BigNumber from 'bignumber.js';
 
 Vue.use(components);
 
