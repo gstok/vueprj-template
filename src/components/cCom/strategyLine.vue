@@ -24,7 +24,9 @@
             v-model="editNodeWindowsShow"
             :value="nodeValue"
             :pos="autoEditNodeWindowPos"
-            @submit="handleSubmitNode"/>
+            @submit="handleSubmitNode"
+            @mouseenter.native="handleWindowEnter"
+            @mouseleave.native="handleWindowLeave"/>
         <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
     </div>
 </template>
@@ -72,6 +74,7 @@
                         top: 0,
                         left: 0,
                     },
+                    editNodeWindowCloseTimer: -1,
                 //#endregion
 
                 //#region 页面样式绑定数据
@@ -85,6 +88,12 @@
 
             autoEditNodeWindowPos (nv) {
 
+            },
+
+            editNodeWindowsShow (nv) {
+                if (nv) {
+                    this.b_setCloseTimer(10000);
+                }
             },
         },
         computed: {
@@ -300,6 +309,14 @@
                         this.b_updateNode(node);
                     }
                 },
+                //鼠标进入编辑窗体事件
+                handleWindowEnter () {
+                    this.b_clearCloseTimer();
+                },
+                //鼠标离开编辑窗体事件
+                handleWindowLeave () {
+                    this.b_setCloseTimer();
+                },
             //#endregion
 
             //#region 业务逻辑方法
@@ -346,6 +363,17 @@
                     this.nodeValue.incVU = "";
                     this.nodeValue.keepS = "";
                 },
+                //清理窗体关闭定时器
+                b_clearCloseTimer () {
+                    clearTimeout(this.editNodeWindowCloseTimer);
+                },
+                //设置窗体关闭定时器
+                b_setCloseTimer (timeout = 2000) {
+                    this.b_clearCloseTimer();
+                    this.editNodeWindowCloseTimer = setTimeout(() => {
+                        this.editNodeWindowsShow = false;
+                    }, timeout);
+                },
             //#endregion
 
             //#region 接口访问方法
@@ -358,13 +386,62 @@
             //#endregion
 
             //#region 其他方法
+                //单位自动换算，px或%单位
+                ut (obj) {
+                    let str = obj.toString().trim();
+                    let num = parseFloat(str);
+                    let ext = "px";
+                    if (isNaN(num)) {
+                        num = 0;
+                    }
+                    if (str.endsWith("%")) {
+                        ext = "%";
+                    }
+                    return num.toString() + ext;
+                },
+                //获得百分比数，可传入百分比数字符串
+                percent (obj, accu) {
+                    let str = obj.toString().trim();
+                    let num = parseFloat(str);
+                    if (!str.endsWith("%")) {
+                        num *= 100;
+                    }
+                    if (accu !== undefined) {
+                        num = this.decimalTrct(num, accu);
+                    }
+                    return num;
+                },
+                //获得百分比数字符串
+                percentStr (obj, accu) {
+                    return this.percent(obj, accu) + "%";
+                },
+                //截断小数位保留精度
+                decimalTrct (num, accu) {
+                    let numStr = Decimal(num).toFixed(accu, Decimal.ROUND_DOWN);
+                    return Decimal(numStr).toNumber();
+                },
+                //获得小数，可传入百分比字符串
+                decimal (obj, accu) {
+                    let str = obj.toString().trim();
+                    let num = parseFloat(str);
+                    if (str.endsWith("%")) {
+                        num /= 100;
+                    }
+                    if (accu !== undefined) {
+                        num = this.decimalTrct(num, accu);
+                    }
+                    return num;
+                },
             //#endregion
         },
         created () {
-            
+
         },
         mounted () {
             this.b_initChart();
+            let num = "3.1415926%";
+            let d = this.decimal(num);
+            console.log(this.percent(d));
         },
         components: {
 
