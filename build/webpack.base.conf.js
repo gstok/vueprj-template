@@ -107,5 +107,8 @@ module.exports = {
     new webpack.ProvidePlugin({
         BigNumber: "bignumber.js",
     }),
+    new webpack.ProvidePlugin({
+        MF: "@/myfunc",
+    }),
   ]
 }
