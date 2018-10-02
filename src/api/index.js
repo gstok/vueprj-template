@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-09-28 15:40:01
+//自动生成的接口导入代码 生成时间 2018-10-02 12:13:16
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -190,9 +190,9 @@ async function api_actSaveAlarmInfoAO0023 (params) {
 }
 
 
-//添加场景脚本关联
+//添加场景脚本关联，之前录入的接口地址是错误的，已经修正
 async function api_actAddSceneScriptRelA0024 (params) {
-    let reqUrl = "/xsea/scene/addSceneScriptRel";
+    let reqUrl = "/api/xsea/scene/addSceneScriptRel";
     let respRtv = await Http.post(reqUrl, params);
     return respChanger(respRtv, "A", true);
 }

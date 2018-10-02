@@ -210,10 +210,10 @@
         "id": 24,
         "type": "A",
         "name": "addSceneScriptRel",
-        "url": "/xsea/scene/addSceneScriptRel",
+        "url": "/api/xsea/scene/addSceneScriptRel",
         "method": "post",
         "warningPass": true,
-        "remark": "添加场景脚本关联"
+        "remark": "添加场景脚本关联，之前录入的接口地址是错误的，已经修正"
     },
     {
         "id": 25,
@@ -274,7 +274,7 @@
         "type": "L",
         "name": "ScriptAssetList",
         "url": "/api/xsea/assetFile/queryByScriptId",
-        "method": "fetch",
+        "method": "get",
         "warningPass": true,
         "remark": "获取脚本资产列表"
     },

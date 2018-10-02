@@ -8,13 +8,12 @@ const S = require("string");
 const Moment = require("moment");
 const colors = require("colors");
 
-
 //json数据库文件地址
 let jsonPath = "./api.json";
 //输出Api导出文件地址
 let apiPath = "../../src/api/index.js";
 
-
+//#region 代码生成方法
 //生成函数名
 function funcName (func) {
     let type = func.type.toUpperCase();
@@ -37,7 +36,8 @@ function funcName (func) {
     return `${ prefix }${ name }${ type }${ id }`;
 }
 //根据接口函数对象生成函数代码
-function funcBuilder (func) {
+function funcBuilder (funcObj) {
+    let func = JSON.parse(JSON.stringify(funcObj));
     func.type = func.type.toUpperCase();
     func.method = func.method.toLowerCase();
     if (func.method == "get") {
@@ -57,9 +57,6 @@ async function api_${ funcName(func) } (params) {
 `;
     return code;
 }
-
-
-//#region 代码生成方法
 //生成顶部引用代码
 function topCode () {
     let code = `
@@ -106,7 +103,6 @@ ${ bottomCode(funcList) }
 }
 //#endregion
 
-
 //#region 文件IO方法
     //从JSON文件之中读取函数对象列表
     function readFuncList (filePath) {
@@ -134,7 +130,6 @@ ${ bottomCode(funcList) }
         fs.writeFileSync(filePath, code);
     }
 //#endregion
-
 
 //#region 功能方法
     //显示所有接口列表
@@ -286,27 +281,125 @@ ${ bottomCode(funcList) }
             console.log("无此Id！".red);
         }
     }
+    //修改一个接口信息
+    async function updateApi (funcList, id, field) {
+        let index = funcList.findIndex(func => func.id == id);
+        let func;
+        if (index > -1) {
+            func = funcList[index];
+            switch (field) {
+                case "TYPE": {
+                    console.log("旧的接口类型为：".blue + func.type.green);
+                    let type = await readLine("请输入新的接口类型(O,L,P,A,AO,R)：".blue);
+                    type = type.toUpperCase().trim();
+                    if (type == "O" ||
+                        type == "L" ||
+                        type == "P" ||
+                        type == "A" ||
+                        type == "AO" ||
+                        type == "R") {
+                        func.type = type;
+                    }
+                    else {
+                        console.log("接口类型输入错误，更新失败！".red);
+                        return;
+                    }
+                } break;
+                case "NAME": {
+                    console.log("旧的接口名称为：".blue + func.name.green);
+                    let name = await readLine("请输入新的接口名称：".blue);
+                    name = name.trim();
+                    if (name) {
+                        func.name = name;
+                    }
+                    else {
+                        console.log("接口名称输入为空，更新失败！".red);
+                        return;
+                    }
+                } break;
+                case "URL": {
+                    console.log("旧的接口地址为：".blue + func.url.green);
+                    let url = await readLine("请输入新的接口地址：".blue);
+                    url = url.trim();
+                    if (url) {
+                        func.url = url;
+                    }
+                    else {
+                        console.log("接口地址输入为空，更新失败！".red);
+                        return;
+                    }
+                } break;
+                case "METHOD": {
+                    console.log("旧的接口请求方法为：".blue + func.method);
+                    let method = await readLine("请输入新的接口请求方法：".blue);
+                    method = method.trim();
+                    if (method) {
+                        func.method = method;
+                    }
+                    else {
+                        console.log("接口请求方法输入为空，更新失败！".red);
+                        return;
+                    }
+                } break;
+                case "WARNINGPASS": {
+                    console.log("旧的接口警告通过为：".blue + func.warningPass);
+                    let warningPass = await readLine("请输入新的接口警告通过（y/n）：".blue);
+                    warningPass = warningPass.toLowerCase().trim();
+                    if (warningPass == "y") {
+                        func.warningPass = true;
+                    }
+                    else if (warningPass == "n") {
+                        func.warningPass = false;
+                    }
+                    else {
+                        console.log("接口警告通过输入错误，更新失败！".red);
+                        return;
+                    }
+                } break;
+                case "REMARK": {
+                    console.log("旧的接口备注信息为：".blue + func.remark);
+                    let remark = await readLine("请输入新的接口备注信息：".blue);
+                    remark = remark.trim();
+                    if (remark) {
+                        func.remark = remark;
+                    }
+                    else {
+                        console.log("接口备注信息输入为空，更新失败！".red);
+                        return;
+                    }
+                } break;
+            }
+            funcList[index] = func;
+            showApiDetailById(funcList, func.id);
+            writeFuncList(funcList, jsonPath);
+            console.log("函数列表文件更新成功！".green);
+            writeApiExportFile(funcList, apiPath);
+            console.log("接口导出文件更新成功！".green);
+        }
+        else {
+            console.log("无此接口！".red);
+        }
+    }
 //#endregion
 
-
-async function readLine (ques) {
-    return new Promise((resolve, reject) => {
-        readLineSys.question(ques, answer => {
-            resolve(answer);
+//#region 命令行输入输出方法
+    async function readLine (ques) {
+        return new Promise((resolve, reject) => {
+            readLineSys.question(ques, answer => {
+                resolve(answer);
+            });
         });
+    }
+    readLineSys.on("close", () => {
+        console.log("谢谢使用".green);
     });
-}
-
-readLineSys.on("close", () => {
-    console.log("谢谢使用".green);
-});
-
-function showLineTop () {
-    console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
-}
-function showLineBottom () {
-    console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
-}
+    function showLineTop () {
+        console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    }
+    function showLineBottom () {
+        console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    }
+//#endregion
 
 //主函数
 async function main () {
@@ -362,7 +455,7 @@ async function main () {
                 await addNewApi(funcList);
                 showLineBottom();
             }
-            else if (text.startsWith("d") || text.startsWith("del")) {
+            else if (text.startsWith("d ") || text.startsWith("del ")) {
                 let strList = text.split(/[\s]+/);
                 if (strList.length == 2) {
                     let id = Number(strList[1].trim());
@@ -378,6 +471,33 @@ async function main () {
                 else {
                     console.log("命令输入错误！".red);
                 }       
+            }
+            //编辑功能
+            else if (text.startsWith("e ") || text.startsWith("edit ")) {
+                let strList = text.split(/[\s]+/);
+                if (strList.length == 3) {
+                    let id = Number(strList[1]);
+                    if (isNaN(id)) {
+                        console.log("接口Id输入错误！".red);
+                    }
+                    else {
+                        let field = strList[2].toUpperCase().trim();
+                        if (field != "TYPE" &&
+                            field != "NAME" &&
+                            field != "URL" &&
+                            field != "METHOD" &&
+                            field != "WARNINGPASS" &&
+                            field != "REMARK") {
+                            console.log("待编辑字段输入错误！".red);
+                        }
+                        else {
+                            await updateApi(funcList, id, field);
+                        }
+                    }
+                }
+                else {
+                    console.log("命令格式输入错误！".red);
+                }
             }
             else if (text == "u" || text == "update") {
                 showLineTop();
