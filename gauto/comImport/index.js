@@ -1,6 +1,11 @@
 
 const fs = require("fs");
 
+//监控Vue组件目录路径
+let watchPath = "";
+//生成导出文件路径
+let dstFilePath = "";
+
 let oldListJson = "json";
 
 function pathConvert (path) {
