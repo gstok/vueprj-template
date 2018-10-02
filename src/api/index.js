@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-02 11:42:31
+//自动生成的接口导入代码 生成时间 2018-10-02 12:12:34
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 

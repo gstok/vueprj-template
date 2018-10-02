@@ -8,13 +8,12 @@ const S = require("string");
 const Moment = require("moment");
 const colors = require("colors");
 
-
 //json数据库文件地址
 let jsonPath = "./api.json";
 //输出Api导出文件地址
 let apiPath = "../../src/api/index.js";
 
-
+//#region 代码生成方法
 //生成函数名
 function funcName (func) {
     let type = func.type.toUpperCase();
@@ -37,7 +36,8 @@ function funcName (func) {
     return `${ prefix }${ name }${ type }${ id }`;
 }
 //根据接口函数对象生成函数代码
-function funcBuilder (func) {
+function funcBuilder (funcObj) {
+    let func = JSON.parse(JSON.stringify(funcObj));
     func.type = func.type.toUpperCase();
     func.method = func.method.toLowerCase();
     if (func.method == "get") {
@@ -57,9 +57,6 @@ async function api_${ funcName(func) } (params) {
 `;
     return code;
 }
-
-
-//#region 代码生成方法
 //生成顶部引用代码
 function topCode () {
     let code = `
@@ -106,7 +103,6 @@ ${ bottomCode(funcList) }
 }
 //#endregion
 
-
 //#region 文件IO方法
     //从JSON文件之中读取函数对象列表
     function readFuncList (filePath) {
@@ -134,7 +130,6 @@ ${ bottomCode(funcList) }
         fs.writeFileSync(filePath, code);
     }
 //#endregion
-
 
 //#region 功能方法
     //显示所有接口列表
@@ -375,6 +370,7 @@ ${ bottomCode(funcList) }
                 } break;
             }
             funcList[index] = func;
+            showApiDetailById(funcList, func.id);
             writeFuncList(funcList, jsonPath);
             console.log("函数列表文件更新成功！".green);
             writeApiExportFile(funcList, apiPath);
@@ -386,25 +382,24 @@ ${ bottomCode(funcList) }
     }
 //#endregion
 
-
-async function readLine (ques) {
-    return new Promise((resolve, reject) => {
-        readLineSys.question(ques, answer => {
-            resolve(answer);
+//#region 命令行输入输出方法
+    async function readLine (ques) {
+        return new Promise((resolve, reject) => {
+            readLineSys.question(ques, answer => {
+                resolve(answer);
+            });
         });
+    }
+    readLineSys.on("close", () => {
+        console.log("谢谢使用".green);
     });
-}
-
-readLineSys.on("close", () => {
-    console.log("谢谢使用".green);
-});
-
-function showLineTop () {
-    console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
-}
-function showLineBottom () {
-    console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
-}
+    function showLineTop () {
+        console.log("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    }
+    function showLineBottom () {
+        console.log("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".cyan);
+    }
+//#endregion
 
 //主函数
 async function main () {

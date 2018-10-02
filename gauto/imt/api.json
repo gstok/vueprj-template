@@ -274,7 +274,7 @@
         "type": "L",
         "name": "ScriptAssetList",
         "url": "/api/xsea/assetFile/queryByScriptId",
-        "method": "fetch",
+        "method": "get",
         "warningPass": true,
         "remark": "获取脚本资产列表"
     },
