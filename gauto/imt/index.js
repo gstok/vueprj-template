@@ -294,24 +294,91 @@ ${ bottomCode(funcList) }
             func = funcList[index];
             switch (field) {
                 case "TYPE": {
-                    console.log("请修改接口类型".green);
+                    console.log("旧的接口类型为：".blue + func.type.green);
+                    let type = await readLine("请输入新的接口类型(O,L,P,A,AO,R)：".blue);
+                    type = type.toUpperCase().trim();
+                    if (type == "O" ||
+                        type == "L" ||
+                        type == "P" ||
+                        type == "A" ||
+                        type == "AO" ||
+                        type == "R") {
+                        func.type = type;
+                    }
+                    else {
+                        console.log("接口类型输入错误，更新失败！".red);
+                        return;
+                    }
                 } break;
                 case "NAME": {
-                    console.log("请修改接口名称".green);
+                    console.log("旧的接口名称为：".blue + func.name.green);
+                    let name = await readLine("请输入新的接口名称：".blue);
+                    name = name.trim();
+                    if (name) {
+                        func.name = name;
+                    }
+                    else {
+                        console.log("接口名称输入为空，更新失败！".red);
+                        return;
+                    }
                 } break;
                 case "URL": {
-                    console.log("请修改接口地址".green);
+                    console.log("旧的接口地址为：".blue + func.url.green);
+                    let url = await readLine("请输入新的接口地址：".blue);
+                    url = url.trim();
+                    if (url) {
+                        func.url = url;
+                    }
+                    else {
+                        console.log("接口地址输入为空，更新失败！".red);
+                        return;
+                    }
                 } break;
                 case "METHOD": {
-                    console.log("请修改接口方法".green);
+                    console.log("旧的接口请求方法为：".blue + func.method);
+                    let method = await readLine("请输入新的接口请求方法：".blue);
+                    method = method.trim();
+                    if (method) {
+                        func.method = method;
+                    }
+                    else {
+                        console.log("接口请求方法输入为空，更新失败！".red);
+                        return;
+                    }
                 } break;
                 case "WARNINGPASS": {
-                    console.log("请修改接口".green);
+                    console.log("旧的接口警告通过为：".blue + func.warningPass);
+                    let warningPass = await readLine("请输入新的接口警告通过（y/n）：".blue);
+                    warningPass = warningPass.toLowerCase().trim();
+                    if (warningPass == "y") {
+                        func.warningPass = true;
+                    }
+                    else if (warningPass == "n") {
+                        func.warningPass = false;
+                    }
+                    else {
+                        console.log("接口警告通过输入错误，更新失败！".red);
+                        return;
+                    }
                 } break;
                 case "REMARK": {
-
+                    console.log("旧的接口备注信息为：".blue + func.remark);
+                    let remark = await readLine("请输入新的接口备注信息：".blue);
+                    remark = remark.trim();
+                    if (remark) {
+                        func.remark = remark;
+                    }
+                    else {
+                        console.log("接口备注信息输入为空，更新失败！".red);
+                        return;
+                    }
                 } break;
             }
+            funcList[index] = func;
+            writeFuncList(funcList, jsonPath);
+            console.log("函数列表文件更新成功！".green);
+            writeApiExportFile(funcList, apiPath);
+            console.log("接口导出文件更新成功！".green);
         }
         else {
             console.log("无此接口！".red);
