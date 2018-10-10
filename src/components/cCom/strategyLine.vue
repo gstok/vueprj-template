@@ -28,14 +28,13 @@
     <div class="chart">
         <div class="chartWarp" :style="autoChartWarpStyle"></div>
         <fcNodeEditWindow
-            v-if="autoEditNodeWindowsShow"
             v-model="editNodeWindowsShow"
             :value="nodeValue"
             :pos="autoEditNodeWindowPos"
             @submit="handleSubmitNode"/>
         <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
         <img
-            v-show="autoDelPointShow"
+            v-show="delPointShow"
             class="delPoint"
             :style="autoDelPointPos"
             @mouseenter="mouseInDelPoint = true"
@@ -301,24 +300,6 @@
                         left: MF.ut(left),
                     };
                 },
-
-                autoDelPointShow () {
-                    if (this.incList.length < 1) {
-                        return false;
-                    }
-                    else {
-                        return this.delPointShow;   
-                    }
-                },
-
-                autoEditNodeWindowsShow () {
-                    if (this.incList.length < 1) {
-                        return false;
-                    }
-                    else {
-                        return this.editNodeWindowsShow;
-                    }
-                },
             //#endregion
 
             //#region 页面样式计算属性
@@ -414,6 +395,10 @@
                 //删除节点
                 b_delNode (index) {
                     this.incList.splice(index, 1);
+                    if (this.incList.length < 1) {
+                        this.editNodeWindowsShow = false;
+                        this.delPointShow = false;
+                    }
                     this.$emit("change", this.incList);
                 },
                 //更新节点
