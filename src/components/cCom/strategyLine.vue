@@ -10,6 +10,13 @@
     .chartWarp {
 
     }
+
+    .delPoint {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        cursor: pointer;
+    }
 </style>
 
 <!--局部覆盖样式-->
@@ -26,6 +33,14 @@
             :pos="autoEditNodeWindowPos"
             @submit="handleSubmitNode"/>
         <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
+        <img
+            v-show="delPointShow"
+            class="delPoint"
+            :style="autoDelPointPos"
+            @mouseenter="mouseInDelPoint = true"
+            @mouseleave="mouseInDelPoint = false"
+            @click="handleDelPointClick"
+            src="@/assets/icons/delPoint.svg" />
     </div>
 </template>
 
@@ -73,6 +88,12 @@
                         left: 0,
                     },
                     editNodeWindowCloseTimer: -1,
+
+                    
+                    mouseNodeIndex: -1,
+                    delPointShow: false,
+                    mouseInDelPoint: false,
+                    delPointCloseTimer: -1,
                 //#endregion
 
                 //#region 页面样式绑定数据
@@ -82,10 +103,6 @@
         watch: {
             autoOption (nv) {
                 this.b_updateChart();
-            },
-
-            autoEditNodeWindowPos (nv) {
-
             },
         },
         computed: {
@@ -264,6 +281,21 @@
                         right: right,
                     };
                 },
+
+                autoDelPointPos () {
+                    let top = null;
+                    let left = null;
+                    if (this.mouseNodeIndex > -1) {
+                        let data = this.autoGraphData[this.mouseNodeIndex];
+                        let position = this.chart.convertToPixel({ seriesIndex: 0 }, data);
+                        top = position[1] - 30;
+                        left = position[0] - 10;
+                    }
+                    return {
+                        top: MF.ut(top),
+                        left: MF.ut(left),
+                    };
+                },
             //#endregion
 
             //#region 页面样式计算属性
@@ -296,6 +328,20 @@
                         }
                     }, 0);
                 },
+                //鼠标移入策略节点事件
+                handleNodeMouseEnter (index) {
+                    clearTimeout(this.delPointCloseTimer);
+                    this.delPointShow = true;
+                    this.mouseNodeIndex = index;
+                },
+                //鼠标移出策略节点事件
+                handleNodeMouseLeave (index) {
+                    this.delPointCloseTimer = setTimeout(() => {
+                        if (this.mouseInDelPoint == false) {
+                            this.delPointShow = false;
+                        }
+                    }, 500);
+                },
                 //节点编辑窗体提交事件
                 handleSubmitNode (node) {
                     if (this.editMode == "add") {
@@ -304,6 +350,10 @@
                     else if (this.editMode == "edit") {
                         this.b_updateNode(node);
                     }
+                },
+                //删除图标点击事件
+                handleDelPointClick () {
+                    this.b_delNode(this.mouseInDelPoint - 1);
                 },
             //#endregion
 
@@ -317,6 +367,16 @@
                             this.handleNodeClick(params.dataIndex);
                         }
                     });
+                    this.chart.on("mouseover", params => {
+                        if (params.componentType == "series") {
+                            this.handleNodeMouseEnter(params.dataIndex);
+                        }
+                    });
+                    this.chart.on("mouseout", params => {
+                        if (params.componentType == "series") {
+                            this.handleNodeMouseLeave(params.dataIndex);
+                        }
+                    });
                     this.chart.setOption(this.autoOptionTemplate);
                 },
                 //更新图表
@@ -326,6 +386,10 @@
                 //添加节点
                 b_addNode (node) {
                     this.incList.push(node);
+                },
+                //删除节点
+                b_delNode (index) {
+                    this.incList.splice(index, 1);
                 },
                 //更新节点
                 b_updateNode (node) {
