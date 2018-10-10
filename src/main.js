@@ -10,7 +10,7 @@ Vue.use(components);
 
 Vue.config.productionTip = false;
 
-//Vue全局混入对象
+//Vue全局混入对象，混入对象的名称必须以mix开头
 Vue.mixin({
     data () {
         return {
@@ -23,6 +23,9 @@ Vue.mixin({
             mixjQuery: jQuery,
             mixMF: MF,
         }
+    },
+    methods: {
+
     },
 });
 
