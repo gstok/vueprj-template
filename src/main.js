@@ -10,6 +10,22 @@ Vue.use(components);
 
 Vue.config.productionTip = false;
 
+//Vue全局混入对象
+Vue.mixin({
+    data () {
+        return {
+            mixS: S,
+            mixMoment: Moment,
+            mixUUID: UUID,
+            mixDecimal: Decimal,
+            mixBigNumber: BigNumber,
+            mix$: $,
+            mixjQuery: jQuery,
+            mixMF: MF,
+        }
+    },
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -19,6 +19,8 @@
     <div id="app">
         <textarea class="test"></textarea>
         <input type="button" @click="toBottomClick" value="到底部"  />
+        <div>{{ mixMF.percentStr(1.23456789, 3) }}</div>
+        <div>{{ mixMoment(new Date()).format("YYYY-MM-DD") }}</div>
         <router-view />
     </div>
 </template>
@@ -32,7 +34,6 @@
             toBottomClick () {
                 this.toBottom("test");
             },
-
             toBottom (className) {
                 className = className.trim();
                 if (!className.startsWith(".")) {
