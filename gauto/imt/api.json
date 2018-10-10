@@ -349,5 +349,32 @@
         "method": "get",
         "warningPass": true,
         "remark": "获取群数据，目前里面包含了TPS曲线和RT曲线信息"
+    },
+    {
+        "id": 40,
+        "type": "L",
+        "name": "ScriptAssertList",
+        "url": "/api/xsea/scriptAssert/queryByScriptId",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取Shell类型脚本的断言列表"
+    },
+    {
+        "id": 41,
+        "type": "AO",
+        "name": "saveScriptAssert",
+        "url": "/api/xsea/scriptAssert/save",
+        "method": "post",
+        "warningPass": true,
+        "remark": "保存脚本相关的断言"
+    },
+    {
+        "id": 42,
+        "type": "A",
+        "name": "deleteScriptAssert",
+        "url": "/api/xsea/scriptAssert/delete",
+        "method": "post",
+        "warningPass": true,
+        "remark": "删除脚本的断言"
     }
 ]

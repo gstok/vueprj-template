@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-10 09:38:47
+//自动生成的接口导入代码 生成时间 2018-10-10 18:37:48
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -318,6 +318,30 @@ async function api_getGroupDataO0039 (params) {
 }
 
 
+//获取Shell类型脚本的断言列表
+async function api_getScriptAssertListL0040 (params) {
+    let reqUrl = "/api/xsea/scriptAssert/queryByScriptId";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//保存脚本相关的断言
+async function api_actSaveScriptAssertAO0041 (params) {
+    let reqUrl = "/api/xsea/scriptAssert/save";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//删除脚本的断言
+async function api_actDeleteScriptAssertA0042 (params) {
+    let reqUrl = "/api/xsea/scriptAssert/delete";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -358,6 +382,9 @@ export const getPlanStatisticsO0036 = api_getPlanStatisticsO0036;
 export const getReportStatisticsO0037 = api_getReportStatisticsO0037;
 export const getRunningPlanListL0038 = api_getRunningPlanListL0038;
 export const getGroupDataO0039 = api_getGroupDataO0039;
+export const getScriptAssertListL0040 = api_getScriptAssertListL0040;
+export const actSaveScriptAssertAO0041 = api_actSaveScriptAssertAO0041;
+export const actDeleteScriptAssertA0042 = api_actDeleteScriptAssertA0042;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -399,5 +426,8 @@ export default {
     getReportStatisticsO0037: api_getReportStatisticsO0037,
     getRunningPlanListL0038: api_getRunningPlanListL0038,
     getGroupDataO0039: api_getGroupDataO0039,
+    getScriptAssertListL0040: api_getScriptAssertListL0040,
+    actSaveScriptAssertAO0041: api_actSaveScriptAssertAO0041,
+    actDeleteScriptAssertA0042: api_actDeleteScriptAssertA0042,
 };
 
