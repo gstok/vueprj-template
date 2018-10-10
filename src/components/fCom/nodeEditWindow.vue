@@ -68,11 +68,12 @@
 </style>
 
 <template>
-    <div 
+    <div
         v-show="show"
         class="nodeEditWindow"
         :style="autoNodeEditWindowStyle"
-        @click.stop="handleWindowClick">
+        @click.stop="handleWindowClick"
+        @blur="handleWindowBlur">
         <div class="topBar">
             <i @click="handleCloseClick" class="icon icon-closec"></i>
         </div>
@@ -206,6 +207,10 @@
                 },
                 handleCloseClick () {
                     this.myShow = false;
+                },
+
+                handleWindowBlur () {
+                    console.log(1);
                 },
             //#endregion
 

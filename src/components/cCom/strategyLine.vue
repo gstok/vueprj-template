@@ -24,9 +24,7 @@
             v-model="editNodeWindowsShow"
             :value="nodeValue"
             :pos="autoEditNodeWindowPos"
-            @submit="handleSubmitNode"
-            @mouseenter.native="handleWindowEnter"
-            @mouseleave.native="handleWindowLeave"/>
+            @submit="handleSubmitNode"/>
         <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
     </div>
 </template>
@@ -88,12 +86,6 @@
 
             autoEditNodeWindowPos (nv) {
 
-            },
-
-            editNodeWindowsShow (nv) {
-                if (nv) {
-                    this.b_setCloseTimer(10000);
-                }
             },
         },
         computed: {
@@ -286,19 +278,23 @@
             //#region 页面事件方法
                 //新增节点按钮点击事件
                 handleAddNodeBtnClick () {
-                    this.editMode = "add";
-                    this.editNodeWindowsShow = true;
-                    this.b_clearEditWindow();
+                    setTimeout(() => {
+                        this.editMode = "add";
+                        this.editNodeWindowsShow = true;
+                        this.b_clearEditWindow();
+                    }, 0);
                 },
                 //策略折线节点点击事件
                 handleNodeClick (index) {
-                    this.editMode = "edit";
-                    this.editNodeIndex = index;
-                    if (this.autoIncIndex > -1) {
-                        let dstNode = this.incList[this.autoIncIndex];
-                        this.b_fillEditWindow(dstNode);
-                        this.editNodeWindowsShow = true;
-                    }
+                    setTimeout(() => {
+                        this.editMode = "edit";
+                        this.editNodeIndex = index;
+                        if (this.autoIncIndex > -1) {
+                            let dstNode = this.incList[this.autoIncIndex];
+                            this.b_fillEditWindow(dstNode);
+                            this.editNodeWindowsShow = true;
+                        }
+                    }, 0);
                 },
                 //节点编辑窗体提交事件
                 handleSubmitNode (node) {
@@ -308,14 +304,6 @@
                     else if (this.editMode == "edit") {
                         this.b_updateNode(node);
                     }
-                },
-                //鼠标进入编辑窗体事件
-                handleWindowEnter () {
-                    this.b_clearCloseTimer();
-                },
-                //鼠标离开编辑窗体事件
-                handleWindowLeave () {
-                    this.b_setCloseTimer();
                 },
             //#endregion
 
@@ -362,17 +350,6 @@
                 b_clearEditWindow () {
                     this.nodeValue.incVU = "";
                     this.nodeValue.keepS = "";
-                },
-                //清理窗体关闭定时器
-                b_clearCloseTimer () {
-                    clearTimeout(this.editNodeWindowCloseTimer);
-                },
-                //设置窗体关闭定时器
-                b_setCloseTimer (timeout = 2000) {
-                    this.b_clearCloseTimer();
-                    this.editNodeWindowCloseTimer = setTimeout(() => {
-                        this.editNodeWindowsShow = false;
-                    }, timeout);
                 },
             //#endregion
 
@@ -439,9 +416,11 @@
         },
         mounted () {
             this.b_initChart();
-            let num = "3.1415926%";
-            let d = this.decimal(num);
-            console.log(this.percent(d));
+            document.addEventListener("click", e => {
+                if (this.editNodeWindowsShow) {
+                    this.editNodeWindowsShow = false;
+                }
+            });
         },
         components: {
 
