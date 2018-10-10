@@ -340,5 +340,14 @@
         "method": "post",
         "warningPass": true,
         "remark": "获取正在运行的计划列表"
+    },
+    {
+        "id": 39,
+        "type": "O",
+        "name": "GroupData",
+        "url": "/statistic/getGroupData",
+        "method": "get",
+        "warningPass": true,
+        "remark": "获取群数据，目前里面包含了TPS曲线和RT曲线信息"
     }
 ]
