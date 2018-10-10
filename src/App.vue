@@ -16,7 +16,9 @@
 
 <template>
     <div id="app">
-        <ccStrategyLine></ccStrategyLine>
+        <ccStrategyLine
+            :incList="incList"
+            @change="handleIncListChange"></ccStrategyLine>
     </div>
 </template>
 
@@ -25,7 +27,29 @@
 
     export default {
         name: 'App',
+        data () {
+            return {
+                incList: [
+                    {
+                        incVU: 10,
+                        keepS: 10,
+                    },
+                    {
+                        incVU: 10,
+                        keepS: 5,
+                    },
+                    {
+                        incVU: 0,
+                        keepS: 10,
+                    },
+                ],
+            };
+        },
         methods: {
+            handleIncListChange (incList) {
+                console.log(incList);
+            },
+
             toBottomClick () {
                 this.toBottom("test");
             },

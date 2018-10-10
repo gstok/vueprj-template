@@ -28,13 +28,14 @@
     <div class="chart">
         <div class="chartWarp" :style="autoChartWarpStyle"></div>
         <fcNodeEditWindow
+            v-if="autoEditNodeWindowsShow"
             v-model="editNodeWindowsShow"
             :value="nodeValue"
             :pos="autoEditNodeWindowPos"
             @submit="handleSubmitNode"/>
         <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
         <img
-            v-show="delPointShow"
+            v-show="autoDelPointShow"
             class="delPoint"
             :style="autoDelPointPos"
             @mouseenter="mouseInDelPoint = true"
@@ -89,10 +90,13 @@
                     },
                     editNodeWindowCloseTimer: -1,
 
-                    
+                    //鼠标移动到的节点Index
                     mouseNodeIndex: -1,
+                    //是否显示删除图标
                     delPointShow: false,
+                    //鼠标是否在删除图标内
                     mouseInDelPoint: false,
+                    //删除图标关闭定时器
                     delPointCloseTimer: -1,
                 //#endregion
 
@@ -251,7 +255,7 @@
                         right = 20;
                     }
                     else if (this.editMode == "edit") {
-                        if (this.editNodeIndex > -1) {
+                        if (this.editNodeIndex > -1 && this.editNodeIndex < this.autoGraphData.length) {
                             let data = this.autoGraphData[this.editNodeIndex];
                             let position = this.chart.convertToPixel({ seriesIndex: 0 }, data);
                             top = position[1] + 14;
@@ -282,10 +286,11 @@
                     };
                 },
 
+                //自动计算出删除图标位置
                 autoDelPointPos () {
                     let top = null;
                     let left = null;
-                    if (this.mouseNodeIndex > -1) {
+                    if (this.mouseNodeIndex > -1 && this.mouseNodeIndex < this.autoGraphData.length) {
                         let data = this.autoGraphData[this.mouseNodeIndex];
                         let position = this.chart.convertToPixel({ seriesIndex: 0 }, data);
                         top = position[1] - 30;
@@ -295,6 +300,24 @@
                         top: MF.ut(top),
                         left: MF.ut(left),
                     };
+                },
+
+                autoDelPointShow () {
+                    if (this.incList.length < 1) {
+                        return false;
+                    }
+                    else {
+                        return this.delPointShow;   
+                    }
+                },
+
+                autoEditNodeWindowsShow () {
+                    if (this.incList.length < 1) {
+                        return false;
+                    }
+                    else {
+                        return this.editNodeWindowsShow;
+                    }
                 },
             //#endregion
 
@@ -353,7 +376,7 @@
                 },
                 //删除图标点击事件
                 handleDelPointClick () {
-                    this.b_delNode(this.mouseInDelPoint - 1);
+                    this.b_delNode(this.mouseNodeIndex - 1);
                 },
             //#endregion
 
@@ -386,10 +409,12 @@
                 //添加节点
                 b_addNode (node) {
                     this.incList.push(node);
+                    this.$emit("change", this.incList);
                 },
                 //删除节点
                 b_delNode (index) {
                     this.incList.splice(index, 1);
+                    this.$emit("change", this.incList);
                 },
                 //更新节点
                 b_updateNode (node) {
@@ -397,6 +422,7 @@
                         this.incList[this.autoIncIndex].incVU = node.incVU;
                         this.incList[this.autoIncIndex].keepS = node.keepS;
                         this.b_updateIncList();
+                        this.$emit("change", this.incList);
                     }
                 },
                 //强制触发incList更新
