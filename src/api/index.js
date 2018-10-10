@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-02 12:13:16
+//自动生成的接口导入代码 生成时间 2018-10-10 09:38:47
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -310,6 +310,14 @@ async function api_getRunningPlanListL0038 (params) {
 }
 
 
+//获取群数据，目前里面包含了TPS曲线和RT曲线信息
+async function api_getGroupDataO0039 (params) {
+    let reqUrl = "/statistic/getGroupData";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -349,6 +357,7 @@ export const getSceneExecLogListL0035 = api_getSceneExecLogListL0035;
 export const getPlanStatisticsO0036 = api_getPlanStatisticsO0036;
 export const getReportStatisticsO0037 = api_getReportStatisticsO0037;
 export const getRunningPlanListL0038 = api_getRunningPlanListL0038;
+export const getGroupDataO0039 = api_getGroupDataO0039;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -389,5 +398,6 @@ export default {
     getPlanStatisticsO0036: api_getPlanStatisticsO0036,
     getReportStatisticsO0037: api_getReportStatisticsO0037,
     getRunningPlanListL0038: api_getRunningPlanListL0038,
+    getGroupDataO0039: api_getGroupDataO0039,
 };
 
