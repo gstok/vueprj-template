@@ -17,6 +17,50 @@
         left: 0px;
         cursor: pointer;
     }
+
+    .topWarp {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .topWarp > .previewInfo {
+        border: 1px solid #D7D9E0;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 8px 20px 8px 20px;
+    }
+
+    .topWarp > .previewInfo > .mglabel {
+        margin-left: 30px;
+    }
+
+    .addNodeBtn {
+        height: 32px;
+        font-size: 14px;
+        color: white;
+        cursor: pointer;
+        background-image: linear-gradient(30deg, #5CBEFF 0%, #2593DD 96%);
+        border-radius: 2px;
+        padding: 0px 18px 0px 18px;
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .addNodeBtn > i {
+        margin-right: 10px;
+    }
+
+    .tipInfo {
+        position: absolute;
+        font-size: 12px;
+        right: 8px;
+        bottom: 22px;
+        color: #999999;
+    }
 </style>
 
 <!--局部覆盖样式-->
@@ -25,22 +69,38 @@
 </style>
 
 <template>
-    <div class="chart">
-        <div class="chartWarp" :style="autoChartWarpStyle"></div>
-        <fcNodeEditWindow
-            v-model="editNodeWindowsShow"
-            :value="nodeValue"
-            :pos="autoEditNodeWindowPos"
-            @submit="handleSubmitNode"/>
-        <input @click="handleAddNodeBtnClick" type="button" value="添加节点" />
-        <img
-            v-show="delPointShow"
-            class="delPoint"
-            :style="autoDelPointPos"
-            @mouseenter="mouseInDelPoint = true"
-            @mouseleave="mouseInDelPoint = false"
-            @click="handleDelPointClick"
-            src="@/assets/icons/delPoint.svg" />
+    <div>
+        <div class="topWarp">
+            <div class="previewInfo">
+                <label>总并发数：</label>
+                <span>{{ `${ autoTotalVU }vu` }}</span>
+                <label class="mglabel">压测时长：</label>
+                <span>{{ `${ autoTotalTimeS }s` }}</span>
+            </div>
+            <div
+                class="addNodeBtn"
+                @click="handleAddNodeBtnClick">
+                <i class="icon icon-tianjia-fangkuang-tianchong"></i>
+                <span>新增节点</span>
+            </div>
+        </div>
+        <div class="chart">
+            <div class="chartWarp" :style="autoChartWarpStyle"></div>
+            <fcNodeEditWindow
+                v-model="editNodeWindowsShow"
+                :value="nodeValue"
+                :pos="autoEditNodeWindowPos"
+                @submit="handleSubmitNode"/>
+            <img
+                v-show="delPointShow"
+                class="delPoint"
+                :style="autoDelPointPos"
+                @mouseenter="mouseInDelPoint = true"
+                @mouseleave="mouseInDelPoint = false"
+                @click="handleDelPointClick"
+                src="@/assets/icons/delPoint.svg" />
+            <div class="tipInfo">节点可点击修改，暂不支持下降策略</div>
+        </div>
     </div>
 </template>
 
@@ -56,7 +116,7 @@
             //图表区域高度
             height: {
                 type: Number,
-                default: 320,
+                default: 240,
             },
             //属性为增幅列表
             incList: {
@@ -232,7 +292,24 @@
                     });
                     return list;
                 },
-
+                //自动计算总并发数
+                autoTotalVU () {
+                    if (this.autoGraphData.length < 2) {
+                        return 0;
+                    }
+                    else {
+                        return this.autoGraphData[this.autoGraphData.length - 1][1];
+                    }
+                },
+                //自动计算出总压测时长（单位秒）
+                autoTotalTimeS () {
+                    if (this.autoGraphData.length < 2) {
+                        return 0;
+                    }
+                    else {
+                        return this.autoGraphData[this.autoGraphData.length - 1][0];
+                    }
+                },
                 //根据节点Index自动计算出增幅数组Index
                 autoIncIndex () {
                     if (this.editNodeIndex > -1) {
