@@ -134,20 +134,17 @@
                 //#endregion
 
                 //#region 页面内容绑定数据
+                    //节点编辑窗体模式
+                    editMode: "add",
+                    //待编辑节点Index
+                    editNodeIndex: -1,
+                    //节点编辑窗体是否显示
+                    editNodeWindowsShow: false,
+                    //节点编辑窗体数据绑定值
                     nodeValue: {
                         incVU: "",
                         keepS: "",
                     },
-
-
-                    editMode: "add",
-                    editNodeIndex: -1,
-                    editNodeWindowsShow: false,
-                    editNodeWindowPos: {
-                        top: 0,
-                        left: 0,
-                    },
-                    editNodeWindowCloseTimer: -1,
 
                     //鼠标移动到的节点Index
                     mouseNodeIndex: -1,
@@ -319,7 +316,6 @@
                         return -1;
                     }
                 },
-
                 //自动计算出节点编辑窗口位置
                 autoEditNodeWindowPos () {
                     let top = null;
@@ -361,7 +357,6 @@
                         right: right,
                     };
                 },
-
                 //自动计算出删除图标位置
                 autoDelPointPos () {
                     let top = null;
@@ -397,6 +392,19 @@
                         this.b_clearEditWindow();
                     }, 0);
                 },
+                //节点编辑窗体提交事件
+                handleSubmitNode (node) {
+                    if (this.editMode == "add") {
+                        this.b_addNode(node);
+                    }
+                    else if (this.editMode == "edit") {
+                        this.b_updateNode(node);
+                    }
+                },
+                //删除图标点击事件
+                handleDelPointClick () {
+                    this.b_delNode(this.mouseNodeIndex - 1);
+                },
                 //策略折线节点点击事件
                 handleNodeClick (index) {
                     setTimeout(() => {
@@ -422,19 +430,6 @@
                             this.delPointShow = false;
                         }
                     }, 500);
-                },
-                //节点编辑窗体提交事件
-                handleSubmitNode (node) {
-                    if (this.editMode == "add") {
-                        this.b_addNode(node);
-                    }
-                    else if (this.editMode == "edit") {
-                        this.b_updateNode(node);
-                    }
-                },
-                //删除图标点击事件
-                handleDelPointClick () {
-                    this.b_delNode(this.mouseNodeIndex - 1);
                 },
             //#endregion
 
@@ -515,52 +510,6 @@
             //#endregion
 
             //#region 其他方法
-                //单位自动换算，px或%单位
-                ut (obj) {
-                    let str = obj.toString().trim();
-                    let num = parseFloat(str);
-                    let ext = "px";
-                    if (isNaN(num)) {
-                        num = 0;
-                    }
-                    if (str.endsWith("%")) {
-                        ext = "%";
-                    }
-                    return num.toString() + ext;
-                },
-                //获得百分比数，可传入百分比数字符串
-                percent (obj, accu) {
-                    let str = obj.toString().trim();
-                    let num = parseFloat(str);
-                    if (!str.endsWith("%")) {
-                        num *= 100;
-                    }
-                    if (accu !== undefined) {
-                        num = this.decimalTrct(num, accu);
-                    }
-                    return num;
-                },
-                //获得百分比数字符串
-                percentStr (obj, accu) {
-                    return this.percent(obj, accu) + "%";
-                },
-                //截断小数位保留精度
-                decimalTrct (num, accu) {
-                    let numStr = Decimal(num).toFixed(accu, Decimal.ROUND_DOWN);
-                    return Decimal(numStr).toNumber();
-                },
-                //获得小数，可传入百分比字符串
-                decimal (obj, accu) {
-                    let str = obj.toString().trim();
-                    let num = parseFloat(str);
-                    if (str.endsWith("%")) {
-                        num /= 100;
-                    }
-                    if (accu !== undefined) {
-                        num = this.decimalTrct(num, accu);
-                    }
-                    return num;
-                },
             //#endregion
         },
         created () {
