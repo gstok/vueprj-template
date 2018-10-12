@@ -403,5 +403,14 @@
         "method": "post",
         "warningPass": true,
         "remark": "获取应用视角下的实时曲线数据"
+    },
+    {
+        "id": 46,
+        "type": "O",
+        "name": "HistData",
+        "url": "/api/xsky/sys/monitor/hist/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取应用视角下的历史曲线数据"
     }
 ]

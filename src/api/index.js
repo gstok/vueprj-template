@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-12 11:38:52
+//自动生成的接口导入代码 生成时间 2018-10-12 19:37:11
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -366,6 +366,14 @@ async function api_getRealTimeDataO0045 (params) {
 }
 
 
+//获取应用视角下的历史曲线数据
+async function api_getHistDataO0046 (params) {
+    let reqUrl = "/api/xsky/sys/monitor/hist/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -412,6 +420,7 @@ export const actDeleteScriptAssertA0042 = api_actDeleteScriptAssertA0042;
 export const getSmyDataL0043 = api_getSmyDataL0043;
 export const getUserDataO0044 = api_getUserDataO0044;
 export const getRealTimeDataO0045 = api_getRealTimeDataO0045;
+export const getHistDataO0046 = api_getHistDataO0046;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -459,5 +468,6 @@ export default {
     getSmyDataL0043: api_getSmyDataL0043,
     getUserDataO0044: api_getUserDataO0044,
     getRealTimeDataO0045: api_getRealTimeDataO0045,
+    getHistDataO0046: api_getHistDataO0046,
 };
 
