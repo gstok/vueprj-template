@@ -331,7 +331,7 @@
                             top = position[1] + 14;
                             left = position[0] - windowWidth / 2;
                             //窗口超界处理
-                            let $warp = $(this.$el);
+                            let $warp = $(this.$el.querySelector(".chart"));
                             let width = $warp.width();
                             let height = $warp.height();
                             if (top < 0) {
