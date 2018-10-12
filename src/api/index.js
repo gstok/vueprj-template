@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-10 18:37:48
+//自动生成的接口导入代码 生成时间 2018-10-12 11:38:52
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -342,6 +342,30 @@ async function api_actDeleteScriptAssertA0042 (params) {
 }
 
 
+//主要用来获取压测执行中页面压力视角和应用视角的表格数据
+async function api_getSmyDataL0043 (params) {
+    let reqUrl = "/statistic/getSmyData";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
+//获取压力视角下的用户曲线数据
+async function api_getUserDataO0044 (params) {
+    let reqUrl = "/statistic/getUserData";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取应用视角下的实时曲线数据
+async function api_getRealTimeDataO0045 (params) {
+    let reqUrl = "/api/xsky/sys/monitor/real/list";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -385,6 +409,9 @@ export const getGroupDataO0039 = api_getGroupDataO0039;
 export const getScriptAssertListL0040 = api_getScriptAssertListL0040;
 export const actSaveScriptAssertAO0041 = api_actSaveScriptAssertAO0041;
 export const actDeleteScriptAssertA0042 = api_actDeleteScriptAssertA0042;
+export const getSmyDataL0043 = api_getSmyDataL0043;
+export const getUserDataO0044 = api_getUserDataO0044;
+export const getRealTimeDataO0045 = api_getRealTimeDataO0045;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -429,5 +456,8 @@ export default {
     getScriptAssertListL0040: api_getScriptAssertListL0040,
     actSaveScriptAssertAO0041: api_actSaveScriptAssertAO0041,
     actDeleteScriptAssertA0042: api_actDeleteScriptAssertA0042,
+    getSmyDataL0043: api_getSmyDataL0043,
+    getUserDataO0044: api_getUserDataO0044,
+    getRealTimeDataO0045: api_getRealTimeDataO0045,
 };
 

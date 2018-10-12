@@ -376,5 +376,32 @@
         "method": "post",
         "warningPass": true,
         "remark": "删除脚本的断言"
+    },
+    {
+        "id": 43,
+        "type": "L",
+        "name": "SmyData",
+        "url": "/statistic/getSmyData",
+        "method": "get",
+        "warningPass": true,
+        "remark": "主要用来获取压测执行中页面压力视角和应用视角的表格数据"
+    },
+    {
+        "id": 44,
+        "type": "O",
+        "name": "userData",
+        "url": "/statistic/getUserData",
+        "method": "get",
+        "warningPass": true,
+        "remark": "获取压力视角下的用户曲线数据"
+    },
+    {
+        "id": 45,
+        "type": "O",
+        "name": "realTimeData",
+        "url": "/api/xsky/sys/monitor/real/list",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取应用视角下的实时曲线数据"
     }
 ]
