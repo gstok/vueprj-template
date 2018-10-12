@@ -105,8 +105,6 @@
 </template>
 
 <script>
-    import api from "../../api";
-
     let windowWidth = 170;
     let windowHeight = 100;
 
@@ -309,7 +307,7 @@
                 },
                 //根据节点Index自动计算出增幅数组Index
                 autoIncIndex () {
-                    if (this.editNodeIndex > -1) {
+                    if (this.editNodeIndex > 0) {
                         return this.editNodeIndex - 1;
                     }
                     else {
