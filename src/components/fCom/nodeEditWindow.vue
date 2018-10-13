@@ -108,8 +108,6 @@
 </template>
 
 <script>
-    import api from "../../api";
-
     export default {
         name: "nodeEditWindow",
         model: {
@@ -210,7 +208,7 @@
                 },
 
                 handleWindowBlur () {
-                    console.log(1);
+
                 },
             //#endregion
 
