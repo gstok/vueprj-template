@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-12 19:37:11
+//自动生成的接口导入代码 生成时间 2018-10-13 10:34:40
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -374,6 +374,30 @@ async function api_getHistDataO0046 (params) {
 }
 
 
+//执行脚本接口
+async function api_actStartScriptExecAO0047 (params) {
+    let reqUrl = "/api/xsea/scriptExe/start";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "AO", true);
+}
+
+
+//停止脚本执行
+async function api_actStopScriptExecA0048 (params) {
+    let reqUrl = "/api/xsea/scriptExe/stop";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "A", true);
+}
+
+
+//查询脚本执行结果
+async function api_getScriptExecResultO0049 (params) {
+    let reqUrl = "/api/xsea/scriptExe/result";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -421,6 +445,9 @@ export const getSmyDataL0043 = api_getSmyDataL0043;
 export const getUserDataO0044 = api_getUserDataO0044;
 export const getRealTimeDataO0045 = api_getRealTimeDataO0045;
 export const getHistDataO0046 = api_getHistDataO0046;
+export const actStartScriptExecAO0047 = api_actStartScriptExecAO0047;
+export const actStopScriptExecA0048 = api_actStopScriptExecA0048;
+export const getScriptExecResultO0049 = api_getScriptExecResultO0049;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -469,5 +496,8 @@ export default {
     getUserDataO0044: api_getUserDataO0044,
     getRealTimeDataO0045: api_getRealTimeDataO0045,
     getHistDataO0046: api_getHistDataO0046,
+    actStartScriptExecAO0047: api_actStartScriptExecAO0047,
+    actStopScriptExecA0048: api_actStopScriptExecA0048,
+    getScriptExecResultO0049: api_getScriptExecResultO0049,
 };
 

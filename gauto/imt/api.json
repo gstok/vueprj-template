@@ -412,5 +412,32 @@
         "method": "post",
         "warningPass": true,
         "remark": "获取应用视角下的历史曲线数据"
+    },
+    {
+        "id": 47,
+        "type": "AO",
+        "name": "startScriptExec",
+        "url": "/api/xsea/scriptExe/start",
+        "method": "post",
+        "warningPass": true,
+        "remark": "执行脚本接口"
+    },
+    {
+        "id": 48,
+        "type": "A",
+        "name": "stopScriptExec",
+        "url": "/api/xsea/scriptExe/stop",
+        "method": "post",
+        "warningPass": true,
+        "remark": "停止脚本执行"
+    },
+    {
+        "id": 49,
+        "type": "O",
+        "name": "ScriptExecResult",
+        "url": "/api/xsea/scriptExe/result",
+        "method": "get",
+        "warningPass": true,
+        "remark": "查询脚本执行结果"
     }
 ]
