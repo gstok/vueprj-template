@@ -439,5 +439,32 @@
         "method": "get",
         "warningPass": true,
         "remark": "查询脚本执行结果"
+    },
+    {
+        "id": 50,
+        "type": "O",
+        "name": "globalSearch",
+        "url": "/api/xsea/search/fuzzy",
+        "method": "get",
+        "warningPass": true,
+        "remark": "全局搜索接口"
+    },
+    {
+        "id": 51,
+        "type": "O",
+        "name": "SceneMeta",
+        "url": "/api/xsea/scene/queryMetaById",
+        "method": "post",
+        "warningPass": true,
+        "remark": "获取场景Meta"
+    },
+    {
+        "id": 52,
+        "type": "L",
+        "name": "userNumLineType",
+        "url": "/statistic/getSceneScriptIds",
+        "method": "get",
+        "warningPass": true,
+        "remark": "获取用户数曲线的可选类型列表"
     }
 ]

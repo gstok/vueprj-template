@@ -1,6 +1,6 @@
 
 
-//自动生成的接口导入代码 生成时间 2018-10-13 10:34:40
+//自动生成的接口导入代码 生成时间 2018-10-15 15:26:47
 import Http from "@/utils/http";
 import respChanger from "@/common/respChanger";
 
@@ -398,6 +398,30 @@ async function api_getScriptExecResultO0049 (params) {
 }
 
 
+//全局搜索接口
+async function api_getGlobalSearchO0050 (params) {
+    let reqUrl = "/api/xsea/search/fuzzy";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取场景Meta
+async function api_getSceneMetaO0051 (params) {
+    let reqUrl = "/api/xsea/scene/queryMetaById";
+    let respRtv = await Http.post(reqUrl, params);
+    return respChanger(respRtv, "O", true);
+}
+
+
+//获取用户数曲线的可选类型列表
+async function api_getUserNumLineTypeL0052 (params) {
+    let reqUrl = "/statistic/getSceneScriptIds";
+    let respRtv = await Http.fetch(reqUrl, params);
+    return respChanger(respRtv, "L", true);
+}
+
+
 
 export const getPlanPageP0001 = api_getPlanPageP0001;
 export const getReportPageP0002 = api_getReportPageP0002;
@@ -448,6 +472,9 @@ export const getHistDataO0046 = api_getHistDataO0046;
 export const actStartScriptExecAO0047 = api_actStartScriptExecAO0047;
 export const actStopScriptExecA0048 = api_actStopScriptExecA0048;
 export const getScriptExecResultO0049 = api_getScriptExecResultO0049;
+export const getGlobalSearchO0050 = api_getGlobalSearchO0050;
+export const getSceneMetaO0051 = api_getSceneMetaO0051;
+export const getUserNumLineTypeL0052 = api_getUserNumLineTypeL0052;
 
 export default {
     getPlanPageP0001: api_getPlanPageP0001,
@@ -499,5 +526,8 @@ export default {
     actStartScriptExecAO0047: api_actStartScriptExecAO0047,
     actStopScriptExecA0048: api_actStopScriptExecA0048,
     getScriptExecResultO0049: api_getScriptExecResultO0049,
+    getGlobalSearchO0050: api_getGlobalSearchO0050,
+    getSceneMetaO0051: api_getSceneMetaO0051,
+    getUserNumLineTypeL0052: api_getUserNumLineTypeL0052,
 };
 
